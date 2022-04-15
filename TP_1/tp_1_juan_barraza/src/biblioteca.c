@@ -4,10 +4,6 @@
  *  Created on: 13 abr. 2022
  *      Author: juanb
  */
-
-#ifndef BIBLIOTECA_C_
-#define BIBLIOTECA_C_
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -87,4 +83,9 @@ int utn_getChar(char* pResultado, char* mensaje, char* mensajeError, char minimo
 	return retorno;
 }
 
-#endif /* BIBLIOTECA_C_ */
+
+
+
+
+
+
