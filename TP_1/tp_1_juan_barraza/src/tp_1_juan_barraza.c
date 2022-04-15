@@ -10,8 +10,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "biblioteca.h"
-#include "calculos.h"
+
+#include "bibliotecaCalculos.h"
+#include "bibliotecaUtn.h"
 
 #define PORCENTAJE_DE_DESCUENTO 10
 #define PORCENTAJE_DE_INTERES 25
