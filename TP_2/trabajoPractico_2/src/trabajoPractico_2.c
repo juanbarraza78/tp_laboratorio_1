@@ -62,34 +62,61 @@ int main(void) {
 				}
 				break;
 			case 2:
-				if(!utn_getNumero(&auxint, "Ingrese el Id que quiere modificar\n", "Error, id incorrecto\n", 0, 4000, 1) &&
-						!modificarPasajero(passengersArray, PASSENGER_LEN, auxint))
+				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
 				{
-					printf("Se pudo modificar correctamente\n");
+					if(!utn_getNumero(&auxint, "Ingrese el Id que quiere modificar\n", "Error, id incorrecto\n", 0, 4000, 1) &&
+											!modificarPasajero(passengersArray, PASSENGER_LEN, auxint))
+					{
+						printf("Se pudo modificar correctamente\n");
+					}
+					else
+					{
+						printf("El id no existe\n");
+					}
 				}
 				else
 				{
-					printf("El id no existe\n");
+					printf("No hay nada cargado\n");
 				}
 				break;
 			case 3:
-				if(!utn_getNumero(&auxint, "Ingrese el Id que quiere eliminar\n", "Error, id incorrecto\n", 0, 4000, 1) &&
-						!removePassenger(passengersArray, PASSENGER_LEN, auxint))
+				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
 				{
-					printf("Se pudo eliminar correctamente\n");
+					if(!utn_getNumero(&auxint, "Ingrese el Id que quiere eliminar\n", "Error, id incorrecto\n", 0, 4000, 1) &&
+											!removePassenger(passengersArray, PASSENGER_LEN, auxint))
+					{
+						printf("Se pudo eliminar correctamente\n");
+					}
+					else
+					{
+						printf("El id no existe\n");
+					}
 				}
 				else
 				{
-					printf("El id no existe\n");
+					printf("No hay nada cargado\n");
 				}
 				break;
 			case 4:
-
+				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
+				{
+					if(sortPassengers(passengersArray, PASSENGER_LEN,1)>0)
+					{
+						printf("Ordenamiento completado\n");
+					}
+				}
+				else
+				{
+					printf("No hay nada cargado\n");
+				}
 				break;
 			case 5:
 				if(!initPassengersForzado(passengersArray, PASSENGER_LEN, "juan", "barraza", 123.5, "b5q", 1, 2) &&
-						!initPassengersForzado(passengersArray, PASSENGER_LEN, "pedro", "tomas", 143.5, "a71", 2, 1) &&
-						!initPassengersForzado(passengersArray, PASSENGER_LEN, "ricardo", "montaner", 1263.5, "ass5", 3, 1))
+						!initPassengersForzado(passengersArray, PASSENGER_LEN, "pedro", "aomas", 143.5, "a71", 2, 1) &&
+						!initPassengersForzado(passengersArray, PASSENGER_LEN, "ricardo", "contaner", 1263.5, "ass5", 3, 1) &&
+						!initPassengersForzado(passengersArray, PASSENGER_LEN, "asd", "aomas", 1263.5, "ass5", 2, 1) &&
+						!initPassengersForzado(passengersArray, PASSENGER_LEN, "asd", "aomas", 1263.5, "ass5", 1, 2) &&
+						!initPassengersForzado(passengersArray, PASSENGER_LEN, "asd", "zontaner", 1263.5, "ass5", 3, 1))
 				{
 					printf("ah funcado chaval\n");
 				}

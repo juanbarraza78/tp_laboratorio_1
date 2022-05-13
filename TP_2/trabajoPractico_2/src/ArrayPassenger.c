@@ -232,18 +232,6 @@ int removePassenger(Passenger* list, int len, int id)
 	return retorno;
 }
 
-//int sortPassengers(Passenger* list, int len, int order)
-//{
-//return 0;
-//}
-
-
-/*
-
-
-
-
-
 int hayAlgoCargado(Passenger pArray[], int len)
 {
 	int retorno = 0;
@@ -261,39 +249,70 @@ int hayAlgoCargado(Passenger pArray[], int len)
 	return retorno;
 }
 
-int ordenarAlumnosPorNombre(Passenger pArray[], int len)
-{
-	int retorno = -1;
-	int i;
-	Passenger aux;
-	int estaOrdenado;
 
-	if (pArray != NULL && len > 0)
+/** \brief Sort the elements in the array of passengers, the argument order indicate UP or DOWN order
+*
+* \param list Passenger*
+* \param len int
+* \param order int [1] indicate UP - [0] indicate DOWN
+*/
+int sortPassengers(Passenger* list, int len, int order)
+{
+	int flagSwap;
+	int i;
+	int contador = 0;
+	int retorno = -1;
+	Passenger bufferPassenger;
+	int nuevoLimite;
+	if(list != NULL && len >= 0)
 	{
-		do {
-			estaOrdenado = 1;
-			len--;
-			for (i = 0; i < len; i++) {
-				if (strcmp(pArray[i].nombre, pArray[i + 1].nombre) < 0) {
-					aux = pArray[i];
-					pArray[i] = pArray[i + 1];
-					pArray[i + 1] = aux;
-					estaOrdenado = 0;
-				} else if (strcmp(pArray[i].nombre, pArray[i + 1].nombre) == 0
-						&& pArray[i].mail < pArray[i + 1].mail) {
-					aux = pArray[i];
-					pArray[i] = pArray[i + 1];
-					pArray[i + 1] = aux;
-					estaOrdenado = 0;
-				}
-			}
-		} while (estaOrdenado == 0);
-		retorno = 0;
+		nuevoLimite = len - 1;
+		do{
+			flagSwap = 0;
+					for(i = 0; i < nuevoLimite; i++)
+					{
+						contador++;
+						if(order == 0)
+						{
+							if(strcmp(list[i].lastName,list[i+1].lastName) < 0)
+							{
+								flagSwap = 1;
+								bufferPassenger = list[i];
+								list[i] = list[i+1];
+								list[i+1] = bufferPassenger;
+							}
+							else if(strcmp(list[i].lastName,list[i+1].lastName) == 0 &&
+									list[i].typePassenger < list[i+1].typePassenger)
+							{
+								flagSwap = 1;
+								bufferPassenger = list[i];
+								list[i] = list[i+1];
+								list[i+1] = bufferPassenger;
+							}
+						}
+						else if(order == 1)
+						{
+							if(strcmp(list[i].lastName,list[i+1].lastName) > 0)
+							{
+								flagSwap = 1;
+								bufferPassenger = list[i];
+								list[i] = list[i+1];
+								list[i+1] = bufferPassenger;
+							}
+							else if(strcmp(list[i].lastName,list[i+1].lastName) == 0 &&
+									list[i].typePassenger > list[i+1].typePassenger)
+							{
+								flagSwap = 1;
+								bufferPassenger = list[i];
+								list[i] = list[i+1];
+								list[i+1] = bufferPassenger;
+							}
+						}
+
+						nuevoLimite--;
+					}
+		}while(flagSwap);
+		retorno = contador;
 	}
 	return retorno;
 }
-
-
-
-
-*/

@@ -21,12 +21,12 @@ int idIncrementalPassager();
 void mostrarPassenger(Passenger alumno);
 int printPassengers(Passenger pArray[], int len);
 int initPassengersForzado(Passenger pArray[], int len,char name[],char lastname[], float price,char flyCode[],int typePassenger, int statusFlight);
-
 int utn_getDatosPassager(char name[],int lenName, char lastName[],int lenLastName, float* price, int* typePassanger, char flyCode[], int lenFlyCode, int* statusFlight);
-
 int modificarPasajero(Passenger pArray[], int len, int idPassenger);
 int findPassengerById(Passenger* list, int len,int id);
-
 int removePassenger(Passenger* list, int len, int id);
+int hayAlgoCargado(Passenger pArray[], int len);
+int ordenarArrayPasajeros(int* Passengers,int len);
+int sortPassengers(Passenger* list, int len, int order);
 
 #endif
