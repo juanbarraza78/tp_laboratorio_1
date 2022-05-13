@@ -9,7 +9,6 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "ArrayPassenger.h"
 #include "entrada_validaciones_datos.h"
 
@@ -100,9 +99,23 @@ int main(void) {
 			case 4:
 				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
 				{
-					if(sortPassengers(passengersArray, PASSENGER_LEN,1)>0)
+					if(!utn_getNumero(&auxint, "OPCION[1] - OPCION[2] - OPCION[3]\n", "Error, opcion incorrecta\n", 0, 3, 1))
 					{
-						printf("Ordenamiento completado\n");
+						switch(auxint)
+						{
+						case 1:
+							if(sortPassengers(passengersArray, PASSENGER_LEN,1) > 0 && !printPassengers(passengersArray, PASSENGER_LEN))
+							{
+								printf("ta guchi\n");
+							}
+							break;
+						case 2:
+							if(!promedioPrecioPasajeros(passengersArray, PASSENGER_LEN))
+							{
+								printf("ta mega guchi\n");
+							}
+							break;
+						}
 					}
 				}
 				else

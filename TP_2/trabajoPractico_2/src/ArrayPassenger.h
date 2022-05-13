@@ -28,5 +28,6 @@ int removePassenger(Passenger* list, int len, int id);
 int hayAlgoCargado(Passenger pArray[], int len);
 int ordenarArrayPasajeros(int* Passengers,int len);
 int sortPassengers(Passenger* list, int len, int order);
+int promedioPrecioPasajeros(Passenger* list, int len);
 
 #endif

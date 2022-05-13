@@ -316,3 +316,42 @@ int sortPassengers(Passenger* list, int len, int order)
 	}
 	return retorno;
 }
+
+int promedioPrecioPasajeros(Passenger* list, int len)
+{
+	int retorno = -1;
+	int contador = 0;
+	float acomulador = 0;
+	float promedio;
+	int contadorPromedioSuperado = 0;
+
+	if(list != NULL && len > 0)
+	{
+		for(int i = 0; i < len; i++)
+		{
+			if(list[i].isEmpty == 0)
+			{
+				contador++;
+				acomulador += list[i].price;
+			}
+		}
+		if(contador != 0)
+		{
+			promedio = acomulador/contador;
+
+			for(int i = 0; i < len; i++)
+			{
+				if(list[i].isEmpty == 0 && list[i].price > promedio)
+				{
+					contadorPromedioSuperado++;
+				}
+			}
+			printf("El total de los precios de los vuelos es: %f\n",acomulador);
+			printf("El promedio de los precios de los vuelos es: %f\n",promedio);
+			printf("La cantidad de personas que superan el promedio de precios es: %d\n",contadorPromedioSuperado);
+			retorno = 0;
+		}
+
+	}
+	return retorno;
+}
