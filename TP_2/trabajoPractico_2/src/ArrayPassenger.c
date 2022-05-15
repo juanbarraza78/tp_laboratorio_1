@@ -7,12 +7,6 @@
 #include <string.h>
 #include "entrada_validaciones_datos.h"
 
-#define PRIMERA_CLASE 1
-#define CLASE_EJECUTIVA 2
-#define CLASE_TURISTA 3
-
-#define ACTIVO 1
-#define INACTIVO 2
 
 char listTypePassenger[3][20] = {"Primera clase","Clase ejecutiva","Clase turista"};
 char listStatusFlight[2][20] = {"ACTIVO","INACTIVO"};
@@ -58,6 +52,7 @@ int addPassengerForzado(Passenger pArray[], int len,int* id,char name[],char las
 		{
 			if(pArray[i].isEmpty == 1)
 			{
+				(*id)++;
 				pArray[i].id = *id;
 				strcpy(pArray[i].name,name);
 				strcpy(pArray[i].lastName,lastname);
@@ -67,7 +62,6 @@ int addPassengerForzado(Passenger pArray[], int len,int* id,char name[],char las
 				pArray[i].statusFlight = statusFlight;
 				pArray[i].isEmpty = 0;
 				retorno = 0;
-				(*id)++;
 				break;
 			}
 		}
@@ -400,7 +394,7 @@ int sortPassengers(Passenger* list, int len, int order)
 *
 * \param list Passenger* se ingresa un array de tipo passenger
 * \param len int se ingresa la longitud del array
-* \param order int indica el orden de la lista (1 decendente - 0 asendente)
+* \param order int indica el orden de la lista (1 asendente - 0 decendente)
 * \return int retorna (-1) si hubo algun error o (0) si esta Ok*
 */
 int sortPassengersByCode(Passenger* list, int len, int order)

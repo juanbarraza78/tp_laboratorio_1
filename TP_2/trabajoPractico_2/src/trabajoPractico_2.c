@@ -26,7 +26,7 @@ int main(void) {
 	int auxTypePassenger;
 	int auxStatusFlight;
 
-	int idPassengers = 10;
+	int idPassengers = 1;
 
 	initPassengers(passengersArray, PASSENGER_LEN);
 
@@ -93,6 +93,7 @@ int main(void) {
 			case 4:
 				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
 				{
+					printf("------INFORMAR------\n");
 					printf("1) Listado de los pasajeros ordenados alfabeticamente por apellido y tipo de pasajero\n");
 					printf("2) Total y promedio de los precios de los pasajes y la cantidad que lo supera\n");
 					printf("3) Listado de los pasajeros por codigo de vuelo y estado de vuelo activo\n");
@@ -125,8 +126,12 @@ int main(void) {
 				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pedro", "lomaz", 100, "zz71", 2, 1);
 				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "ricardo", "coco", 100, "1asd", 3, 1);
 				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "tomas", "rios", 200, "aaww2", 2, 1);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pepe", "aliz", 200, "ccddd1", 1, 2);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pepito", "zom", 300, "abbb44", 3, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pepe", "aliz", 200, "bcddd1", 1, 2);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pepito", "xom", 300, "cbbb44", 3, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "ale", "zom", 300, "dbbb44", 3, 2);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "bal", "yom", 300, "ebbb44", 3, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "ale", "zom", 300, "fbbb44", 2, 2);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "ale", "zom", 300, "abbb44", 1, 2);
 				break;
 			case 6:
 				printPassengers(passengersArray, PASSENGER_LEN);
