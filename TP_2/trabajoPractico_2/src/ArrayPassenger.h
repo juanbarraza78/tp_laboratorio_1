@@ -16,18 +16,18 @@ typedef struct {
 } Passenger;
 
 int initPassengers(Passenger* list, int len);
+int addPassengerForzado(Passenger pArray[], int len,int* id,char name[],char lastname[], float price,char flyCode[],int typePassenger, int statusFlight);
 int addPassenger(Passenger* list, int len, int id, char name[],char lastName[],float price,int typePassenger, char flycode[], int statusFlight);
-int idIncrementalPassager();
-void mostrarPassenger(Passenger alumno);
+int utn_getDatosPassager(int* id, char name[],int lenName, char lastName[],int lenLastName, float* price, int* typePassanger, char flyCode[], int lenFlyCode, int* statusFlight);
+void mostrarPassenger(Passenger pasajero);
 int printPassengers(Passenger pArray[], int len);
-int initPassengersForzado(Passenger pArray[], int len,char name[],char lastname[], float price,char flyCode[],int typePassenger, int statusFlight);
-int utn_getDatosPassager(char name[],int lenName, char lastName[],int lenLastName, float* price, int* typePassanger, char flyCode[], int lenFlyCode, int* statusFlight);
 int modificarPasajero(Passenger pArray[], int len, int idPassenger);
 int findPassengerById(Passenger* list, int len,int id);
 int removePassenger(Passenger* list, int len, int id);
 int hayAlgoCargado(Passenger pArray[], int len);
-int ordenarArrayPasajeros(int* Passengers,int len);
 int sortPassengers(Passenger* list, int len, int order);
-int promedioPrecioPasajeros(Passenger* list, int len);
+int sortPassengersByCode(Passenger* list, int len, int order);
+int MostrarPromedioYTotalDePrecioPasajeros(Passenger* list, int len);
+int filtrarYMostrarPorStatusVuelo(Passenger* list, int len);
 
 #endif

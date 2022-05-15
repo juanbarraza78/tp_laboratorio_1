@@ -1,10 +1,7 @@
 /*
  ============================================================================
  Name        : trabajoPractico_2.c
- Author      : 
- Version     :
- Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
+ Author      : Juan Ignacio Barraza
  ============================================================================
  */
 #include <stdio.h>
@@ -14,18 +11,13 @@
 
 #define PASSENGER_LEN 2000
 
-#define PRIMERA_CLASE 0
-#define CLASE_EJECUTIVA 1
-#define CLASE_TURISTA 2
-
 int main(void) {
 	setbuf(stdout, NULL);
 
 	Passenger passengersArray[PASSENGER_LEN];
+
 	int opciones;
-
-	int auxint;
-
+	int opcionesDos;
 	int auxId;
 	char auxName[51];
 	char auxLastName[51];
@@ -33,6 +25,8 @@ int main(void) {
 	char auxFlycode[20];
 	int auxTypePassenger;
 	int auxStatusFlight;
+
+	int idPassengers = 10;
 
 	initPassengers(passengersArray, PASSENGER_LEN);
 
@@ -50,8 +44,8 @@ int main(void) {
 			switch(opciones)
 			{
 			case 1:
-				if(!utn_getDatosPassager(auxName, 51, auxLastName, 51, &auxPrice, &auxTypePassenger, auxFlycode, 20, &auxStatusFlight) &&
-						!addPassenger(passengersArray, PASSENGER_LEN, auxId, auxName, auxLastName, auxPrice, auxTypePassenger, auxFlycode, auxStatusFlight))
+				if(!utn_getDatosPassager(&idPassengers, auxName, 51, auxLastName, 51, &auxPrice, &auxTypePassenger, auxFlycode, 20, &auxStatusFlight) &&
+						!addPassenger(passengersArray, PASSENGER_LEN, idPassengers, auxName, auxLastName, auxPrice, auxTypePassenger, auxFlycode, auxStatusFlight))
 				{
 					printf("El pasajero se cargo correctamente\n");
 				}
@@ -63,14 +57,14 @@ int main(void) {
 			case 2:
 				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
 				{
-					if(!utn_getNumero(&auxint, "Ingrese el Id que quiere modificar\n", "Error, id incorrecto\n", 0, 4000, 1) &&
-											!modificarPasajero(passengersArray, PASSENGER_LEN, auxint))
+					if(!utn_getNumero(&auxId, "Ingrese el Id que quiere modificar\n", "Error, id incorrecto\n", 0, 4000, 2) &&
+											!modificarPasajero(passengersArray, PASSENGER_LEN, auxId))
 					{
 						printf("Se pudo modificar correctamente\n");
 					}
 					else
 					{
-						printf("El id no existe\n");
+						printf("No se pudo modificar correctamente\n");
 					}
 				}
 				else
@@ -81,14 +75,14 @@ int main(void) {
 			case 3:
 				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
 				{
-					if(!utn_getNumero(&auxint, "Ingrese el Id que quiere eliminar\n", "Error, id incorrecto\n", 0, 4000, 1) &&
-											!removePassenger(passengersArray, PASSENGER_LEN, auxint))
+					if(!utn_getNumero(&auxId, "Ingrese el Id que quiere eliminar\n", "Error, id incorrecto\n", 0, 4000, 2) &&
+											removePassenger(passengersArray, PASSENGER_LEN, auxId) == 0)
 					{
 						printf("Se pudo eliminar correctamente\n");
 					}
 					else
 					{
-						printf("El id no existe\n");
+						printf("No se pudo eliminar correctamente\n");
 					}
 				}
 				else
@@ -99,21 +93,24 @@ int main(void) {
 			case 4:
 				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
 				{
-					if(!utn_getNumero(&auxint, "OPCION[1] - OPCION[2] - OPCION[3]\n", "Error, opcion incorrecta\n", 0, 3, 1))
+					printf("1) Listado de los pasajeros ordenados alfabeticamente por apellido y tipo de pasajero\n");
+					printf("2) Total y promedio de los precios de los pasajes y la cantidad que lo supera\n");
+					printf("3) Listado de los pasajeros por codigo de vuelo y estado de vuelo activo\n");
+					if(!utn_getNumero(&opcionesDos, "Ingrese una opcion\n", "Error, No existe esa opcion\n", 1, 3, 2))
 					{
-						switch(auxint)
+						switch(opcionesDos)
 						{
 						case 1:
-							if(sortPassengers(passengersArray, PASSENGER_LEN,1) > 0 && !printPassengers(passengersArray, PASSENGER_LEN))
+							if(!sortPassengers(passengersArray, PASSENGER_LEN,1))
 							{
-								printf("ta guchi\n");
+								printPassengers(passengersArray, PASSENGER_LEN);
 							}
 							break;
 						case 2:
-							if(!promedioPrecioPasajeros(passengersArray, PASSENGER_LEN))
-							{
-								printf("ta mega guchi\n");
-							}
+							MostrarPromedioYTotalDePrecioPasajeros(passengersArray, PASSENGER_LEN);
+							break;
+						case 3:
+							filtrarYMostrarPorStatusVuelo(passengersArray, PASSENGER_LEN);
 							break;
 						}
 					}
@@ -124,29 +121,15 @@ int main(void) {
 				}
 				break;
 			case 5:
-				if(!initPassengersForzado(passengersArray, PASSENGER_LEN, "juan", "barraza", 123.5, "b5q", 1, 2) &&
-						!initPassengersForzado(passengersArray, PASSENGER_LEN, "pedro", "aomas", 143.5, "a71", 2, 1) &&
-						!initPassengersForzado(passengersArray, PASSENGER_LEN, "ricardo", "contaner", 1263.5, "ass5", 3, 1) &&
-						!initPassengersForzado(passengersArray, PASSENGER_LEN, "asd", "aomas", 1263.5, "ass5", 2, 1) &&
-						!initPassengersForzado(passengersArray, PASSENGER_LEN, "asd", "aomas", 1263.5, "ass5", 1, 2) &&
-						!initPassengersForzado(passengersArray, PASSENGER_LEN, "asd", "zontaner", 1263.5, "ass5", 3, 1))
-				{
-					printf("ah funcado chaval\n");
-				}
-				else
-				{
-					printf("noooo ah funcado chaval\n");
-				}
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "juan", "barraza", 100, "xxb5q", 1, 2);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pedro", "lomaz", 100, "zz71", 2, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "ricardo", "coco", 100, "1asd", 3, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "tomas", "rios", 200, "aaww2", 2, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pepe", "aliz", 200, "ccddd1", 1, 2);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pepito", "zom", 300, "abbb44", 3, 1);
 				break;
 			case 6:
-				if(!printPassengers(passengersArray, PASSENGER_LEN))
-				{
-					printf("ah funcado chaval\n");
-				}
-				else
-				{
-					printf("no ah funcado chaval\n");
-				}
+				printPassengers(passengersArray, PASSENGER_LEN);
 				break;
 			}
 		}

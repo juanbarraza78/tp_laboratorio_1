@@ -7,10 +7,20 @@
 #include <string.h>
 #include "entrada_validaciones_datos.h"
 
-/** \brief To indicate that all position in the array are empty,* this function put the flag (isEmpty) in TRUE in all* position of the array
-* \param list Passenger* Pointer to array of passenger
-* \param len int Array length
-* \return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok*
+#define PRIMERA_CLASE 1
+#define CLASE_EJECUTIVA 2
+#define CLASE_TURISTA 3
+
+#define ACTIVO 1
+#define INACTIVO 2
+
+char listTypePassenger[3][20] = {"Primera clase","Clase ejecutiva","Clase turista"};
+char listStatusFlight[2][20] = {"ACTIVO","INACTIVO"};
+
+/** \brief inicializa una array de passenger (isEmpty = 1)
+* \param list Passenger* se ingresa una arry del tipo Passenger
+* \param len int se ingresa la longitud del array
+* \return int retorna un (-1) si hubo un error o (0) si se puedo inicializar el array
 */
 int initPassengers(Passenger* list, int len)
 {
@@ -26,17 +36,56 @@ int initPassengers(Passenger* list, int len)
 	return retorno;
 }
 
+/** \brief carga un pasajero en la primera posicion vacia de un array del tipo passenger de forma forzada
+* \param list passenger* se ingresa un array del tipo passenger
+* \param len int se ingresa la longitud del array
+* \param id int* se ingresa el id del pasajero
+* \param name[] char se ingresa el nombre del pasajero
+* \param lastName[] char se ingresa el apellido del pasajero
+* \param price float  se ingresa el precio del vuelo
+* \param typePassenger int se ingresa el tipo de pasajero
+* \param flycode[] char se ingresa el codigo del vuelo
+* \param statusFlight int se ingresa el estado del vuelo
+* \return int retorna (-1) si hubo algun error o (0) si se pudo cargar
+*/
+int addPassengerForzado(Passenger pArray[], int len,int* id,char name[],char lastname[], float price,char flyCode[],int typePassenger, int statusFlight)
+{
+	int retorno = -1;
+	int i;
+	if (pArray != NULL && len > 0)
+	{
+		for(i = 0; i < len; i++)
+		{
+			if(pArray[i].isEmpty == 1)
+			{
+				pArray[i].id = *id;
+				strcpy(pArray[i].name,name);
+				strcpy(pArray[i].lastName,lastname);
+				pArray[i].price = price;
+				strcpy(pArray[i].flycode, flyCode);
+				pArray[i].typePassenger = typePassenger;
+				pArray[i].statusFlight = statusFlight;
+				pArray[i].isEmpty = 0;
+				retorno = 0;
+				(*id)++;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
 
-/** \brief add in a existing list of passengers the values received as parameters* in the first empty position
-* \param list passenger*
-* \param len int
-* \param id int
-* \param name[] char
-* \param lastName[] char
-* \param price float
-* \param typePassenger int
-* \param flycode[] char
-* \return int Return (-1) if Error [Invalid length or NULL pointer or without free space] - (0) if Ok
+/** \brief carga un pasajero en la primera posicion vacia de un array del tipo passenger
+* \param list passenger* se ingresa un array del tipo passenger
+* \param len int se ingresa la longitud del array
+* \param id int se ingresa el id del pasajero
+* \param name[] char se ingresa el nombre del pasajero
+* \param lastName[] char se ingresa el apellido del pasajero
+* \param price float  se ingresa el precio del vuelo
+* \param typePassenger int se ingresa el tipo de pasajero
+* \param flycode[] char se ingresa el codigo del vuelo
+* \param statusFlight int se ingresa el estado del vuelo
+* \return int retorna (-1) si hubo algun error o (0) si se pudo cargar un pasajero
 */
 int addPassenger(Passenger* list, int len, int id, char name[],char lastName[],float price,int typePassenger, char flycode[], int statusFlight)
 {
@@ -50,7 +99,7 @@ int addPassenger(Passenger* list, int len, int id, char name[],char lastName[],f
 			if(list[i].isEmpty == 1)
 			{
 
-				list[i].id = idIncrementalPassager();
+				list[i].id = id;
 				strcpy(list[i].name,name);
 				strcpy(list[i].lastName,lastName);
 				list[i].price = price;
@@ -66,7 +115,22 @@ int addPassenger(Passenger* list, int len, int id, char name[],char lastName[],f
 	return retorno;
 }
 
-int utn_getDatosPassager(char name[],int lenName, char lastName[],int lenLastName, float* price, int* typePassanger, char flyCode[], int lenFlyCode, int* statusFlight)
+/** \brief imprime un pasajero
+*
+* \param id int* Variable donde se guarda el id
+* \param name[] char Variable donde se guarda el nombre
+* \param lenName int longitud del array name[]
+* \param lastName[] char Variable donde se guarda el apellido
+* \param lenLastName int longitud del array lastName[]
+* \param price float* Variable donde se guarda el precio del vuelo
+* \param typePassanger int* Variable donde se guarda el tipo de pasajero
+* \param flyCode[] Variable donde se guarda el codigo del vuelo
+* \param lenFlyCode int longitud del array flyCode[]
+* \param statusFlight int* Variable donde se guarda el estado del vuelo
+* \return int retorna (-1) si hubo algun error o (0) si esta ok*
+*
+*/
+int utn_getDatosPassager(int* id, char name[],int lenName, char lastName[],int lenLastName, float* price, int* typePassanger, char flyCode[], int lenFlyCode, int* statusFlight)
 {
 	int retorno = -1;
 	if(!utn_getNombre(name, lenName, "Ingrese su nombre del pasajero:\n", "Error, Nombre no valido\n", 2) &&
@@ -77,26 +141,32 @@ int utn_getDatosPassager(char name[],int lenName, char lastName[],int lenLastNam
 			!utn_getNumero(statusFlight, "Ingrese estado del vuelo: ACTIVO[1] - INACTIVO[2]\n", "Error, opcion no valida\n", 1, 2, 2))
 	{
 		retorno = 0;
+		(*id)++;
 	}
 	return retorno;
 }
-
-int idIncrementalPassager()
-{
-    static int idPassager = 0;
-    idPassager++;
-    return idPassager;
-}
-
+/** \brief imprime un pasajero
+*
+* \param pasajero Passenger se ingresa una variable tipo passenger
+* \return int retorna (-1) si hubo algun error o (0) si se pudo imprimir en pantalla
+*
+*/
 void mostrarPassenger(Passenger pasajero)
 {
 	if (pasajero.isEmpty == 0)
 	{
-		printf("Id: %d - Nombre: %s - Apellido: %s -  Precio: %f - Codigo: %s - Tipo %d - Estado %d \n",
-				pasajero.id, pasajero.name, pasajero.lastName, pasajero.price, pasajero.flycode, pasajero.typePassenger, pasajero.statusFlight);
+		printf("Id: %d - Nombre: %s - Apellido: %s -  Precio: %f - Codigo: %s - Tipo %s - Estado %s \n",
+				pasajero.id, pasajero.name, pasajero.lastName, pasajero.price, pasajero.flycode, listTypePassenger[pasajero.typePassenger -1], listStatusFlight[pasajero.statusFlight -1]);
 	}
 }
 
+/** \brief imprime los elementos de una array passenger si esta ocupado
+*
+* \param list Passenger* se ingresa una array de passenger
+* \param len int se ingresa la longitud de la array
+* \return int retorna (-1) si hubo algun error o (0) si se pudo imprimir en pantalla
+*
+*/
 int printPassengers(Passenger pArray[], int len)
 {
 	int retorno = -1;
@@ -111,32 +181,13 @@ int printPassengers(Passenger pArray[], int len)
 	return retorno;
 }
 
-int initPassengersForzado(Passenger pArray[], int len,char name[],char lastname[], float price,char flyCode[],int typePassenger, int statusFlight)
-{
-	int retorno = -1;
-	int i;
-	if (pArray != NULL && len > 0)
-	{
-		for(i = 0; i < len; i++)
-		{
-			if(pArray[i].isEmpty == 1)
-			{
-				pArray[i].id = idIncrementalPassager();
-				strcpy(pArray[i].name,name);
-				strcpy(pArray[i].lastName,lastname);
-				pArray[i].price = price;
-				strcpy(pArray[i].flycode, flyCode);
-				pArray[i].typePassenger = typePassenger;
-				pArray[i].statusFlight = statusFlight;
-				pArray[i].isEmpty = 0;
-				retorno = 0;
-				break;
-			}
-		}
-	}
-	return retorno;
-}
-
+/** \brief busca un pasajero por la array segun su id y se modifica algun campo
+* \param list Passenger* se ingresa una array de passenger
+* \param len int  se ingresa la longitud de la array
+* \param id int se ingresa el id del pasajero solicitado
+* \return int retorna un (-1) si hubo algun error o (0) si se modifico correctamente
+*
+*/
 int modificarPasajero(Passenger pArray[], int len, int idPassenger)
 {
 	int retorno = -1;
@@ -156,34 +207,37 @@ int modificarPasajero(Passenger pArray[], int len, int idPassenger)
 								switch(opcionesBuffer)
 								{
 								case 1:
-									if(!utn_getNombre(pArray[index].name, 51, "Ingrese el nombre del pasajero:\n", "Error, Nombre no valido\n", 2))
+									if(!utn_getNombre(pArray[index].name, 51, "Ingrese el nombre del pasajero:\n", "Error, Nombre no valido\n", 0))
 									{
 										retorno = 0;
 									}
 									break;
 								case 2:
-									if(!utn_getNombre(pArray[index].lastName, 51, "Ingrese el apellido del pasajero:\n", "Error, apellido no valido\n", 2))
+									if(!utn_getNombre(pArray[index].lastName, 51, "Ingrese el apellido del pasajero:\n", "Error, apellido no valido\n", 0))
 									{
 										retorno = 0;
 									}
 									break;
 								case 3:
-									if(!utn_getNumeroFlotante(&pArray[index].price, "Ingrese el precio del vuelo:\n", "Error, precio no valido\n", 0, 100000, 2))
+									if(!utn_getNumeroFlotante(&pArray[index].price, "Ingrese el precio del vuelo:\n", "Error, precio no valido\n", 0, 100000, 0))
 									{
 										retorno = 0;
 									}
 									break;
 								case 4:
-									if(!utn_getNumero(&pArray[index].typePassenger, "Ingrese tipo de pasajero:\nPrimera clase[1] - Clase ejecutiva[2] - Clase turista[3]\n", "Error, opcion no valida\n", 1, 3, 2))
+									if(!utn_getNumero(&pArray[index].typePassenger, "Ingrese tipo de pasajero:\nPrimera clase[1] - Clase ejecutiva[2] - Clase turista[3]\n", "Error, opcion no valida\n", 1, 3, 0))
 									{
 										retorno = 0;
 									}
 									break;
 								case 5:
-									if(!utn_getCodigo(pArray[index].flycode, 20, "Ingrese codigo del vuelo:\n", "Error, codigo no valido\n", 2))
+									if(!utn_getCodigo(pArray[index].flycode, 20, "Ingrese codigo del vuelo:\n", "Error, codigo no valido\n", 0))
 									{
 										retorno = 0;
 									}
+									break;
+								case 6:
+									retorno = 0;
 									break;
 								}
 							}
@@ -193,6 +247,13 @@ int modificarPasajero(Passenger pArray[], int len, int idPassenger)
 	return retorno;
 }
 
+/** \brief busca un pasajero por la array segun su id y retorna el index donde se encuentra
+* \param list Passenger* se ingresa una array de passenger
+* \param len int  se ingresa la longitud de la array
+* \param id int se ingresa el id del pasajero solicitado
+* \return int retorna un -1 si hubo algun error o el index del pasajero solicitado
+*
+*/
 int findPassengerById(Passenger* list, int len,int id)
 {
 	int retorno = -1;
@@ -209,6 +270,15 @@ int findPassengerById(Passenger* list, int len,int id)
 	}
 	return retorno;
 }
+
+/** \brief elimina a un pasajero ingresando su id
+*
+* \param list Passenger* se ingresa un array de passenger
+* \param len int indica la longitud de la array
+* \param id int se ingresa el id del pasajero a eliminar
+* \return int retorno un (-1) si hay algun error y (0) si funciono correctamente
+*
+*/
 int removePassenger(Passenger* list, int len, int id)
 {
 	int retorno = -1;
@@ -221,17 +291,26 @@ int removePassenger(Passenger* list, int len, int id)
 		{
 			printf("Estas seguro de eliminar a: ");
 			mostrarPassenger(list[index]);
-			if(utn_getNumero(&opcionesBuffer, "SI[1] - NO[2]\n", "Opcion no valida\n", 1, 2, 1) == 0 && opcionesBuffer == 1)
+			if(!utn_getNumero(&opcionesBuffer, "SI[1] - NO[2]\n", "Opcion no valida\n", 1, 2, 1))
 			{
-				list[index].isEmpty = 1;
-				retorno = 0;
+				if(opcionesBuffer == 1)
+				{
+					list[index].isEmpty = 1;
+					retorno = 0;
+				}
+
 			}
 		}
 
 	}
 	return retorno;
 }
-
+/** \brief muestra si una lista array tiene algo cargado (is.empty = 0)
+*
+* \param list Passenger* se ingresa una array de tipo passenger
+* \param len int indica la longitud de la array
+* \return int retorno un 0 si no hay nada cargado o un 1 si hay algo cargado
+*/
 int hayAlgoCargado(Passenger pArray[], int len)
 {
 	int retorno = 0;
@@ -250,17 +329,84 @@ int hayAlgoCargado(Passenger pArray[], int len)
 }
 
 
-/** \brief Sort the elements in the array of passengers, the argument order indicate UP or DOWN order
+/** \brief ordena un array de passenger
 *
-* \param list Passenger*
-* \param len int
-* \param order int [1] indicate UP - [0] indicate DOWN
+* \param list Passenger* es un array de passenger
+* \param len int indica la longitud de la array
+* \param order int indica [1] si es de forma asendente - [0] de fotma decendente
+* \return int retorna un -1 si hay algun error y 0 si funciono correctamente
 */
 int sortPassengers(Passenger* list, int len, int order)
 {
 	int flagSwap;
 	int i;
-	int contador = 0;
+	int retorno = -1;
+	Passenger bufferPassenger;
+	int nuevoLimite;
+
+	if(list != NULL && len >= 0)
+	{
+		nuevoLimite = len - 1;
+		do{
+			flagSwap = 0;
+			for(i = 0; i < nuevoLimite; i++)
+			{
+				if(order == 0)
+				{
+					retorno = 0;
+					if(strcmp(list[i].lastName,list[i+1].lastName) < 0)
+					{
+						flagSwap = 1;
+						bufferPassenger = list[i];
+						list[i] = list[i+1];
+						list[i+1] = bufferPassenger;
+					}
+					else if(strcmp(list[i].lastName,list[i+1].lastName) == 0 &&
+							list[i].typePassenger < list[i+1].typePassenger)
+					{
+						flagSwap = 1;
+						bufferPassenger = list[i];
+						list[i] = list[i+1];
+						list[i+1] = bufferPassenger;
+					}
+				}
+				else if(order == 1)
+				{
+					retorno = 0;
+					if(strcmp(list[i].lastName,list[i+1].lastName) > 0)
+					{
+						flagSwap = 1;
+						bufferPassenger = list[i];
+						list[i] = list[i+1];
+						list[i+1] = bufferPassenger;
+					}
+					else if(strcmp(list[i].lastName,list[i+1].lastName) == 0 &&
+							list[i].typePassenger > list[i+1].typePassenger)
+					{
+						flagSwap = 1;
+						bufferPassenger = list[i];
+						list[i] = list[i+1];
+						list[i+1] = bufferPassenger;
+					}
+				}
+				nuevoLimite--;
+			}
+		}while(flagSwap);
+	}
+	return retorno;
+}
+
+/** \brief ordena la lista segun con respecto al codigo del vuelo
+*
+* \param list Passenger* se ingresa un array de tipo passenger
+* \param len int se ingresa la longitud del array
+* \param order int indica el orden de la lista (1 decendente - 0 asendente)
+* \return int retorna (-1) si hubo algun error o (0) si esta Ok*
+*/
+int sortPassengersByCode(Passenger* list, int len, int order)
+{
+	int flagSwap;
+	int i;
 	int retorno = -1;
 	Passenger bufferPassenger;
 	int nuevoLimite;
@@ -269,55 +415,44 @@ int sortPassengers(Passenger* list, int len, int order)
 		nuevoLimite = len - 1;
 		do{
 			flagSwap = 0;
-					for(i = 0; i < nuevoLimite; i++)
+			for(i = 0; i < nuevoLimite; i++)
+			{
+				if(order == 0)
+				{
+					retorno = 0;
+					if(strcmp(list[i].flycode,list[i+1].flycode) < 0)
 					{
-						contador++;
-						if(order == 0)
-						{
-							if(strcmp(list[i].lastName,list[i+1].lastName) < 0)
-							{
-								flagSwap = 1;
-								bufferPassenger = list[i];
-								list[i] = list[i+1];
-								list[i+1] = bufferPassenger;
-							}
-							else if(strcmp(list[i].lastName,list[i+1].lastName) == 0 &&
-									list[i].typePassenger < list[i+1].typePassenger)
-							{
-								flagSwap = 1;
-								bufferPassenger = list[i];
-								list[i] = list[i+1];
-								list[i+1] = bufferPassenger;
-							}
-						}
-						else if(order == 1)
-						{
-							if(strcmp(list[i].lastName,list[i+1].lastName) > 0)
-							{
-								flagSwap = 1;
-								bufferPassenger = list[i];
-								list[i] = list[i+1];
-								list[i+1] = bufferPassenger;
-							}
-							else if(strcmp(list[i].lastName,list[i+1].lastName) == 0 &&
-									list[i].typePassenger > list[i+1].typePassenger)
-							{
-								flagSwap = 1;
-								bufferPassenger = list[i];
-								list[i] = list[i+1];
-								list[i+1] = bufferPassenger;
-							}
-						}
-
-						nuevoLimite--;
+						flagSwap = 1;
+						bufferPassenger = list[i];
+						list[i] = list[i+1];
+						list[i+1] = bufferPassenger;
 					}
+				}
+				else if(order == 1)
+				{
+					retorno = 0;
+					if(strcmp(list[i].flycode,list[i+1].flycode) > 0)
+					{
+						flagSwap = 1;
+						bufferPassenger = list[i];
+						list[i] = list[i+1];
+						list[i+1] = bufferPassenger;
+					}
+				}
+				nuevoLimite--;
+			}
 		}while(flagSwap);
-		retorno = contador;
 	}
 	return retorno;
 }
 
-int promedioPrecioPasajeros(Passenger* list, int len)
+/** \brief Calcula el total, el promedio y la cantidad de personas que lo superaron y lo muestra en pantalla
+*
+* \param list Passenger* se ingresa la array del tipo passenger
+* \param len int es la longitud del arra
+* \return retorna (0) si funciono y (-1) sino
+*/
+int MostrarPromedioYTotalDePrecioPasajeros(Passenger* list, int len)
 {
 	int retorno = -1;
 	int contador = 0;
@@ -349,6 +484,40 @@ int promedioPrecioPasajeros(Passenger* list, int len)
 			printf("El total de los precios de los vuelos es: %f\n",acomulador);
 			printf("El promedio de los precios de los vuelos es: %f\n",promedio);
 			printf("La cantidad de personas que superan el promedio de precios es: %d\n",contadorPromedioSuperado);
+			retorno = 0;
+		}
+
+	}
+	return retorno;
+}
+
+/** \brief filtra la lista ingresada por el status vuelo y luego la ordena con respecto al codigo de vuelo
+*
+* \param list Passenger* se ingresa la lista de tipo passanger
+* \param len int longitud de la lista
+* \return retorna un -1 si no funciono y un 0 lo hizo correctamente
+*/
+int filtrarYMostrarPorStatusVuelo(Passenger* list, int len)
+{
+	Passenger PassengersList[2000];
+
+	initPassengers(PassengersList, 2000);
+
+	int retorno = -1;
+	int contador = 0;
+	if(list != NULL && len > 0)
+	{
+		for(int i = 0; i < len; i++)
+		{
+			if(list[i].statusFlight == 1 && list[i].isEmpty == 0)
+			{
+				PassengersList[contador] = list[i];
+				contador++;
+
+			}
+		}
+		if(!sortPassengersByCode(PassengersList, 2000, 1) && printPassengers(PassengersList, 2000))
+		{
 			retorno = 0;
 		}
 
