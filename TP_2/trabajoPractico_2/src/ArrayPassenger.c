@@ -7,7 +7,6 @@
 #include <string.h>
 #include "entrada_validaciones_datos.h"
 
-
 char listTypePassenger[3][20] = {"Primera clase","Clase ejecutiva","Clase turista"};
 char listStatusFlight[2][20] = {"ACTIVO","INACTIVO"};
 

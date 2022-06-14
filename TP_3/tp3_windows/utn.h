@@ -2,8 +2,8 @@
  * H
  */
 
-#ifndef ENTRADA_VALIDACIONES_DATOS_H_
-#define ENTRADA_VALIDACIONES_DATOS_H_
+#ifndef UTN_H_
+#define UTN_H_
 
 int myGets(char cadena[], int longitud);
 
@@ -19,8 +19,8 @@ int getEmail(char email[], int len);
 int esMail(char* cadena, int limite);
 int utn_getEmail(char email[], int len, char mensaje[], char mensajeError[], int reintentos);
 
-int esNombre(char* cadena, int limite);
 int getNombre(char nombre[], int len);
+int esNombre(char* cadena, int limite);
 int utn_getNombre(char nombre[], int len, char mensaje[], char mensajeError[], int reintentos);
 
 int getCodigo(char codigo[], int len);
