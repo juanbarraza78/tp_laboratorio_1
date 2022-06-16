@@ -87,15 +87,15 @@ int Passenger_convertirTipoPasajeroStr(int tipoPasajero, char* tipoPasajeroStr)
 	int retorno = -1;
 	switch(tipoPasajero)
 	{
-	case 0:
+	case 1:
 		strcpy(tipoPasajeroStr,"FirstClass\0");
 		retorno = 0;
 		break;
-	case 1:
+	case 2:
 		strcpy(tipoPasajeroStr,"ExecutiveClass\0");
 		retorno = 0;
 		break;
-	case 2:
+	case 3:
 		strcpy(tipoPasajeroStr,"EconomyClass\0");
 		retorno = 0;
 		break;
@@ -108,19 +108,19 @@ int Passenger_convertirEstadoVueloStr(int estadoVuelo, char* estadoVueloStr)
 	int retorno = -1;
 	switch(estadoVuelo)
 	{
-	case 0:
+	case 1:
 		strcpy(estadoVueloStr,"Aterrizado\0");
 		retorno = 0;
 		break;
-	case 1:
+	case 2:
 		strcpy(estadoVueloStr,"En Horario\0");
 		retorno = 0;
 		break;
-	case 2:
+	case 3:
 		strcpy(estadoVueloStr,"En Vuelo\0");
 		retorno = 0;
 		break;
-	case 3:
+	case 4:
 		strcpy(estadoVueloStr,"Demorado\0");
 		retorno = 0;
 		break;
@@ -277,7 +277,7 @@ int Passenger_modificarPorIdArray(LinkedList* listaPasajeros, int id)
 			{
 				Passenger_imprimirUno(pAuxPassager);
 				if(!utn_getNumero(&auxOpcion, "Que campo quiere modificar?\n 1)Nombre\n2)Apellido\n3)Precio\n4)Codigo\n5)Tipo\n6)Estado",
-									"Error, opcion invalida", 1, 6, 1))
+									"Error, opcion invalida\n", 1, 6, 1))
 				{
 					switch(auxOpcion)
 					{
@@ -358,7 +358,7 @@ int Passenger_getId(Passenger* this,int* id)
 int Passenger_setNombre(Passenger* this,char* nombre)
 {
 	int retorno = -1;
-	if(this != NULL && nombre != NULL) // ver que me falta (isValidName)
+	if(this != NULL && nombre != NULL && esNombre(nombre, LEN_NOMBRE))
 	{
 		strncpy(this->nombre,nombre,LEN_NOMBRE);
 		retorno = 0;
@@ -370,7 +370,7 @@ int Passenger_getNombre(Passenger* this,char* nombre)
 	int retorno = -1;
 	if(this != NULL && nombre != NULL)
 	{
-		strcpy(nombre,this->nombre);
+		strncpy(nombre,this->nombre,LEN_NOMBRE);
 		retorno = 0;
 	}
 	return retorno;
@@ -379,7 +379,7 @@ int Passenger_getNombre(Passenger* this,char* nombre)
 int Passenger_setApellido(Passenger* this,char* apellido)
 {
 	int retorno = -1;
-	if(this != NULL && apellido != NULL)
+	if(this != NULL && apellido != NULL && esNombre(apellido, LEN_APELLIDO))
 	{
 		strncpy(this->apellido,apellido,LEN_APELLIDO);
 		retorno = 0;
@@ -391,7 +391,7 @@ int Passenger_getApellido(Passenger* this,char* apellido)
 	int retorno = -1;
 	if(this != NULL && apellido != NULL)
 	{
-		strcpy(apellido,this->apellido);
+		strncpy(apellido,this->apellido,LEN_APELLIDO);
 		retorno = 0;
 	}
 	return retorno;
@@ -421,7 +421,7 @@ int Passenger_getPrecio(Passenger* this,float* precio)
 int Passenger_setTipoPasajero(Passenger* this,int tipoPasajero)
 {
 	int retorno = -1;
-	if(this != NULL && tipoPasajero >= 0 && tipoPasajero <= 2)
+	if(this != NULL && tipoPasajero >= 1 && tipoPasajero <= 3)
 	{
 		this->tipoPasajero = tipoPasajero;
 		retorno = 0;
@@ -442,9 +442,9 @@ int Passenger_getTipoPasajero(Passenger* this,int* tipoPasajero)
 int Passenger_setCodigoVuelo(Passenger* this,char* codigoVuelo)
 {
 	int retorno = -1;
-	if(this != NULL && codigoVuelo != NULL)
+	if(this != NULL && codigoVuelo != NULL && esCodigo(codigoVuelo, LEN_CODIGO))
 	{
-		strcpy(this->codigoVuelo,codigoVuelo);
+		strncpy(this->codigoVuelo,codigoVuelo,LEN_CODIGO);
 		retorno = 0;
 	}
 	return retorno;
@@ -463,7 +463,7 @@ int Passenger_getCodigoVuelo(Passenger* this,char* codigoVuelo)
 int Passenger_setEstadoVuelo(Passenger* this,int estadoVuelo)
 {
 	int retorno = -1;
-	if(this != NULL && estadoVuelo >= 0 && estadoVuelo <= 3)
+	if(this != NULL && estadoVuelo >= 1 && estadoVuelo <= 4)
 	{
 		this->estadoVuelo = estadoVuelo;
 		retorno = 0;
@@ -522,7 +522,7 @@ int Passenger_setTipoPasajeroStr(Passenger* this,char* tipoPasajero)
 	if(this != NULL && tipoPasajero != NULL && esNumerica(tipoPasajero, sizeof(tipoPasajero)))
 	{
 		auxTipoPasajero = atoi(tipoPasajero);
-		if(auxTipoPasajero >= 0 && auxTipoPasajero <= 2)
+		if(auxTipoPasajero >= 1 && auxTipoPasajero <= 3)
 		{
 			this->tipoPasajero = auxTipoPasajero;
 			retorno = 0;
@@ -538,7 +538,7 @@ int Passenger_setEstadoVueloStr(Passenger* this,char* estadoVuelo)
 	if(this != NULL && estadoVuelo != NULL && esNumerica(estadoVuelo, sizeof(estadoVuelo)))
 	{
 		auxEstadoVuelo = atoi(estadoVuelo);
-		if(auxEstadoVuelo >= 0 && auxEstadoVuelo <= 3)
+		if(auxEstadoVuelo >= 1 && auxEstadoVuelo <= 4)
 		{
 			this->estadoVuelo = auxEstadoVuelo;
 			retorno = 0;

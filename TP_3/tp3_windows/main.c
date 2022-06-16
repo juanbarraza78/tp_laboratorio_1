@@ -5,22 +5,6 @@
 #include "Passenger.h"
 #include "utn.h"
 
-/****************************************************
-    Menu:
-     1. Cargar los datos de los pasajeros desde el archivo data.csv (modo texto).
-     2. Cargar los datos de los pasajeros desde el archivo data.csv (modo binario).
-     3. Alta de pasajero
-     4. Modificar datos de pasajero
-     5. Baja de pasajero
-     6. Listar pasajeros
-     7. Ordenar pasajeros
-     8. Guardar los datos de los pasajeros en el archivo data.csv (modo texto).
-     9. Guardar los datos de los pasajeros en el archivo data.csv (modo binario).
-    10. Salir
-*****************************************************/
-
-
-
 int main()
 {
 	setbuf(stdout, NULL);
@@ -45,22 +29,39 @@ int main()
 			{
 			case 1:
 				printf("opcion1\n");
-			  controller_loadFromText("data.csv",listaPasajeros);
 				break;
 			case 2:
 				printf("opcion2\n");
 				break;
 			case 3:
-				printf("opcion3\n");
+				if(!Passenger_agregarArray(listaPasajeros, 1, "juan", "barraza", 100, 1, "bc3", 1) &&
+						!Passenger_agregarArray(listaPasajeros, 2, "aasd", "barraza", 200, 2, "bc3", 2) &&
+						!Passenger_agregarArray(listaPasajeros, 3, "cbvsdfg", "cxasd", 10000, 2, "bc3", 3) &&
+						!Passenger_agregarArray(listaPasajeros, 4, "asdfgsdg", "zasdas", 10, 3, "bc3", 4))
+				{
+					printf("lista ok\n");
+				}
 				break;
 			case 4:
-				printf("opcion4\n");
+				if(!Passenger_modificarPorIdArray(listaPasajeros, 1))
+				{
+					printf("modificar ok\n");
+				}
 				break;
 			case 5:
 				printf("opcion5\n");
 				break;
 			case 6:
-				printf("opcion6\n");
+				Passenger_imprimirArray(listaPasajeros);
+				break;
+			case 7:
+				printf("opcion7\n");
+				break;
+			case 8:
+				printf("opcion8\n");
+				break;
+			case 9:
+				printf("opcion9\n");
 				break;
 			}
 		}
