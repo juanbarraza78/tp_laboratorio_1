@@ -63,6 +63,13 @@ void Passenger_delete(Passenger* this)
 	}
 }
 
+int incrementarId()
+{
+    static int idPassenger = 1000;
+    idPassenger++;
+    return idPassenger;
+}
+
 /**************************************************************************************/
 
 int Passenger_deleteIndexArray(LinkedList* listaPasajeros, int index)
@@ -192,15 +199,15 @@ int Passenger_buscarPorIdArray(LinkedList* listaPasajeros, int id)
 
 	if(listaPasajeros != NULL && id >= 0)
 	{
-		retorno = 0;
 		longitud = ll_len(listaPasajeros);
 		if(longitud >= 0)
 		{
 			for(int i = 0; i < longitud ; i++)
 			{
 				pAuxPassager = ll_get(listaPasajeros, i);
+				Passenger_getId(pAuxPassager, &auxId);
 
-				if(pAuxPassager != NULL && !Passenger_getId(pAuxPassager, &auxId) && auxId == id)
+				if(pAuxPassager != NULL && auxId == id)
 				{
 					retorno = i;
 					break;
@@ -244,7 +251,7 @@ int Passenger_borrarPorIdArray(LinkedList* listaPasajeros, int id)
 		auxIndexBorrar = Passenger_buscarPorIdArray(listaPasajeros, id);
 		if(auxIndexBorrar >= 0)
 		{
-			if(Passenger_deleteIndexArray(listaPasajeros, auxIndexBorrar))
+			if(!Passenger_deleteIndexArray(listaPasajeros, auxIndexBorrar))
 			{
 				retorno = 0;
 			}
@@ -328,6 +335,95 @@ int Passenger_modificarPorIdArray(LinkedList* listaPasajeros, int id)
 				}
 			}
 		}
+	}
+	return retorno;
+}
+
+int Passenger_sortNombre(void* parametro1, void* parametro2)
+{
+    int retorno = -1;
+    char auxNombre1[LEN_NOMBRE];
+    char auxNombre2[LEN_NOMBRE];
+
+    if(parametro1 != NULL && parametro2 != NULL)
+    {
+    	Passenger_getNombre(parametro1, auxNombre1);
+    	Passenger_getNombre(parametro2, auxNombre2);
+
+		if(strcmp(auxNombre1,auxNombre2)>0)
+		{
+			retorno = 1;
+		}
+    }
+
+    return retorno;
+}
+int Passenger_sortprecio(void* parametro1, void* parametro2) // podria hacer otro sort
+{
+    int retorno = -1;
+    float precio1;
+    float precio2;
+
+    if(parametro1!=NULL && parametro2!=NULL)
+    {
+    	Passenger_getPrecio(parametro1, &precio1);
+    	Passenger_getPrecio(parametro2, &precio2);
+        if(precio1 > precio2)
+        {
+        	retorno = 1;
+        }
+
+    }
+    return retorno;
+}
+
+int Passenger_convertirTipoPasajeroint(char* tipoPasajeroStr)
+{
+	int retorno = -1;
+	if(tipoPasajeroStr != NULL)
+	{
+		if(strcmp(tipoPasajeroStr,"FirstClass") == 0)
+		{
+			strcpy(tipoPasajeroStr,"1\0");
+			retorno = 0;
+		}
+		else if(strcmp(tipoPasajeroStr,"ExecutiveClass") == 0)
+		{
+			strcpy(tipoPasajeroStr,"2\0");
+			retorno = 0;
+		}
+		else if(strcmp(tipoPasajeroStr,"EconomyClass") == 0)
+		{
+			strcpy(tipoPasajeroStr,"3\0");
+			retorno = 0;
+		}
+
+	}
+	return retorno;
+}
+
+int Passenger_convertirEstadoVueloSint(char* estadoVueloStr)
+{
+	int retorno = -1;
+	if(strcmp(estadoVueloStr,"Aterrizado") == 0)
+	{
+		strcpy(estadoVueloStr,"1\0");
+		retorno = 0;
+	}
+	else if(strcmp(estadoVueloStr,"En Horario") == 0)
+	{
+		strcpy(estadoVueloStr,"2\0");
+		retorno = 0;
+	}
+	else if(strcmp(estadoVueloStr,"En Vuelo") == 0)
+	{
+		strcpy(estadoVueloStr,"3\0");
+		retorno = 0;
+	}
+	else if(strcmp(estadoVueloStr,"Demorado") == 0)
+	{
+		strcpy(estadoVueloStr,"4\0");
+		retorno = 0;
 	}
 	return retorno;
 }

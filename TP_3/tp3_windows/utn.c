@@ -366,7 +366,9 @@ int esNombre(char* cadena, int limite)
 	{
 		for(int i = 0; i<limite && cadena[i] != '\0'; i++ )
 		{
-			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && cadena[i] != ' ')
+			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && cadena[i] != ' ' && cadena[i] != 'ñ' && cadena[i] != 'Ñ' &&
+					cadena[i] != 'á' && cadena[i] != 'é' && cadena[i] != 'í' && cadena[i] != 'ó' && cadena[i] != 'ú' &&
+					cadena[i] != 'Á' && cadena[i] != 'É' && cadena[i] != 'Í' && cadena[i] != 'Ó' && cadena[i] != 'Ú')
 			{
 				retorno = 0;
 				break;
@@ -444,7 +446,92 @@ int esCodigo(char* cadena, int limite) // alfa numerico y se le permite espacio
 	{
 		for(int i = 0; i<limite && cadena[i] != '\0'; i++ )
 		{
-			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '1' || cadena[i] > '9') && cadena[i] != ' ')
+			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '0' || cadena[i] > '9') && cadena[i] != ' ')
+			{
+				retorno = 0;
+				break;
+			}
+
+		}
+	}
+	return retorno;
+}
+
+/** \brief pide un path que puede ser alfanumerico
+* \param path[] array donde se guarda el codigo
+* \param len longitud del array codigo
+* \param mensaje[] char se ingresa el mensaje para pedir el codigo
+* \param mensajeError[] char se ingresa el mensaje en caso de error
+* \param reintentos int se ingresa la cantidad de intentos que tiene el usuario
+* \return int retorna un (-1) si hubo un error o (0) si esta ok*
+*/
+int utn_getPath(char path[], int len, char mensaje[], char mensajeError[], int reintentos)
+{
+	int retorno = -1;
+	char bufferString[256];
+	do
+		{
+			printf("%s",mensaje);
+			if(esPath(bufferString,sizeof(bufferString)) == 0)
+			{
+				strncpy(path,bufferString,len);
+				retorno = 0;
+				break;
+			}
+			else
+			{
+				printf("%s",mensajeError);
+			}
+			reintentos --;
+		}while(reintentos >= 0);
+	return retorno;
+}
+
+/** \brief pide un path , lo verifica y luego lo guarda en un array
+* \param path[] char se ingresa un array de caracteres
+* \param len int se ingresa la longitud del array
+* \return int retorna un (-1) si hubo un error o (0) si esta ok*
+*/
+int getPath(char path[], int len)
+{
+	int retorno = -1;
+	char bufferString[256];
+
+	if(path != NULL &&
+			len > 0 &&
+			myGets(bufferString,sizeof(bufferString)) == 0 &&
+			esPath(bufferString,sizeof(bufferString)) == 1 )
+	{
+		retorno = 0;
+		strncpy(path,bufferString,len);
+	}
+	return retorno;
+}
+
+/** \brief verifica si una cadena de caracteres es un path
+* \param path char* se ingresa la cadena a verificar
+* \param limite int se ingresa la longitud de la cadena
+*\return int retorna un (1) si es verdadero (0) si es falso
+*/
+int esPath(char* cadena, int limite) // alfa numerico y permite .
+{
+	int retorno = 1;
+	int contadorComa = 0;
+	if(cadena != NULL && limite > 0)
+	{
+		for(int i = 0; i<limite && cadena[i] != '\0'; i++ )
+		{
+			if(cadena[i] == '.')
+			{
+				contadorComa++;
+				if(contadorComa >= 2)
+				{
+					retorno = 0;
+					break;
+				}
+				continue;
+			}
+			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '0' || cadena[i] > '9'))
 			{
 				retorno = 0;
 				break;

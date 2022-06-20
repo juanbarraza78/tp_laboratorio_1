@@ -10,6 +10,7 @@ int main()
 	setbuf(stdout, NULL);
 	LinkedList* listaPasajeros = ll_newLinkedList();
 	int opciones;
+	int cantidadGuardada;
 	do
 	{
 		printf("\n ---Menu---\n");
@@ -28,40 +29,92 @@ int main()
 			switch(opciones)
 			{
 			case 1:
-				printf("opcion1\n");
+				controller_loadFromText("data.csv", listaPasajeros);
 				break;
 			case 2:
-				printf("opcion2\n");
+				controller_loadFromBinary("dataBinario.csv", listaPasajeros);
 				break;
 			case 3:
-				if(!Passenger_agregarArray(listaPasajeros, 1, "juan", "barraza", 100, 1, "bc3", 1) &&
-						!Passenger_agregarArray(listaPasajeros, 2, "aasd", "barraza", 200, 2, "bc3", 2) &&
-						!Passenger_agregarArray(listaPasajeros, 3, "cbvsdfg", "cxasd", 10000, 2, "bc3", 3) &&
-						!Passenger_agregarArray(listaPasajeros, 4, "asdfgsdg", "zasdas", 10, 3, "bc3", 4))
+				if(!controller_addPassenger(listaPasajeros))
 				{
-					printf("lista ok\n");
+					printf("add ok\n");
 				}
 				break;
 			case 4:
-				if(!Passenger_modificarPorIdArray(listaPasajeros, 1))
+				if(ll_isEmpty(listaPasajeros) == 0)
 				{
-					printf("modificar ok\n");
+					if(!controller_editPassenger(listaPasajeros))
+					{
+						printf("modificar ok\n");
+					}
 				}
+				else
+				{
+					printf("No hay nada guardado\n");
+				}
+
 				break;
 			case 5:
-				printf("opcion5\n");
+				if(ll_isEmpty(listaPasajeros) == 0)
+				{
+					if(!controller_removePassenger(listaPasajeros))
+					{
+						printf("remove ok\n");
+					}
+				}
+				else
+				{
+					printf("No hay nada guardado\n");
+				}
+
 				break;
 			case 6:
-				Passenger_imprimirArray(listaPasajeros);
+				if(ll_isEmpty(listaPasajeros) == 0)
+				{
+					controller_ListPassenger(listaPasajeros);
+				}
+				else
+				{
+					printf("No hay nada guardado\n");
+				}
 				break;
 			case 7:
-				printf("opcion7\n");
+				if(ll_isEmpty(listaPasajeros) == 0)
+				{
+					controller_sortPassenger(listaPasajeros);
+				}
+				else
+				{
+					printf("No hay nada guardado\n");
+				}
 				break;
 			case 8:
-				printf("opcion8\n");
+				if(ll_isEmpty(listaPasajeros) == 0)
+				{
+					cantidadGuardada = controller_saveAsText("data.csv", listaPasajeros);
+					if(cantidadGuardada >= 0)
+					{
+						printf("se pudo guardar correctamente %d elementos\n", cantidadGuardada);
+					}
+				}
+				else
+				{
+					printf("No hay nada guardado\n");
+				}
 				break;
 			case 9:
-				printf("opcion9\n");
+				if(ll_isEmpty(listaPasajeros) == 0)
+				{
+					cantidadGuardada = controller_saveAsBinary("dataBinario.csv", listaPasajeros);
+					if(cantidadGuardada >= 0)
+					{
+						printf("se pudo guardar correctamente %d elementos\n", cantidadGuardada);
+					}
+				}
+				else
+				{
+					printf("No hay nada guardado\n");
+				}
 				break;
 			}
 		}

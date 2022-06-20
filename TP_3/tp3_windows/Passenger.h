@@ -1,4 +1,4 @@
-/*
+ /*
  * Passenger.h
  *
  *  Created on: 19 may. 2022
@@ -12,7 +12,7 @@
 
 #define LEN_NOMBRE 50
 #define LEN_APELLIDO 50
-#define LEN_CODIGO 4
+#define LEN_CODIGO 10
 
 typedef struct
 {
@@ -32,6 +32,7 @@ Passenger* Passenger_new();
 Passenger* Passenger_newParametrosStr(char* idStr, char* nombre, char* apellido, char* precioStr, char* tipoPasajeroStr, char* codigoVuelo, char* estadoVueloStr);
 Passenger* Passenger_newParametros(int id, char* nombre, char* apellido, float precio, int tipoPasajero, char* codigoVuelo, int estadoVuelo);
 void Passenger_delete(Passenger* this);
+int incrementarId();
 
 /**************************************************************************************/
 
@@ -44,6 +45,10 @@ int Passenger_buscarPorIdArray(LinkedList* listaPasajeros, int id);
 int Passenger_agregarArray(LinkedList* listaPasajeros, int id, char* nombre, char* apellido, float precio, int tipoPasajero, char* codigoVuelo, int estadoVuelo);
 int Passenger_borrarPorIdArray(LinkedList* listaPasajeros, int id);
 int Passenger_modificarPorIdArray(LinkedList* listaPasajeros, int id);
+int Passenger_sortNombre(void* parametro1, void* parametro2);
+int Passenger_sortprecio(void* parametro1, void* parametro2);
+int Passenger_convertirTipoPasajeroint(char* tipoPasajeroStr);
+int Passenger_convertirEstadoVueloSint(char* estadoVueloStr);
 
 /**************************************************************************************/
 

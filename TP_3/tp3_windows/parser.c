@@ -33,11 +33,14 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)
 			cantidadLeida = fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",auxIdStr,auxNombre,auxApellido,auxPrecioStr,auxCodigoVuelo,auxTipoPasajeroStr,auxEstadoVueloStr);
 			if(cantidadLeida == 7)
 			{
-				pAuxPassager = Passenger_newParametrosStr(auxIdStr, auxNombre, auxApellido, auxPrecioStr, auxTipoPasajeroStr, auxCodigoVuelo, auxEstadoVueloStr);
-				if(pAuxPassager != NULL)
+				if(!Passenger_convertirTipoPasajeroint(auxTipoPasajeroStr) && !Passenger_convertirEstadoVueloSint(auxEstadoVueloStr))
 				{
-					ll_add(pArrayListPassenger, pAuxPassager);
-					retorno = 0;
+					pAuxPassager = Passenger_newParametrosStr(auxIdStr, auxNombre, auxApellido, auxPrecioStr, auxTipoPasajeroStr, auxCodigoVuelo, auxEstadoVueloStr);
+					if(pAuxPassager != NULL)
+					{
+						ll_add(pArrayListPassenger, pAuxPassager);
+						retorno = 0;
+					}
 				}
 			}
 			else
