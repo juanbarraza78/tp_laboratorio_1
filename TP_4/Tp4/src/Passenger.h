@@ -32,7 +32,12 @@ Passenger* Passenger_new();
 Passenger* Passenger_newParametrosStr(char* idStr, char* nombre, char* apellido, char* precioStr, char* tipoPasajeroStr, char* codigoVuelo, char* estadoVueloStr);
 Passenger* Passenger_newParametros(int id, char* nombre, char* apellido, float precio, int tipoPasajero, char* codigoVuelo, int estadoVuelo);
 void Passenger_delete(Passenger* this);
-int incrementarId();
+
+/**************************************************************************************/
+
+int  Passenger_loadId(char* path);
+int Passenger_saveId(char* path,int id);
+int  Passenger_idMaximo(char* path);
 
 /**************************************************************************************/
 

@@ -531,7 +531,7 @@ int esPath(char* cadena, int limite) // alfa numerico y permite .
 				}
 				continue;
 			}
-			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '0' || cadena[i] > '9'))
+			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '0' || cadena[i] > '9') && cadena[i] != '/')
 			{
 				retorno = 0;
 				break;

@@ -101,8 +101,8 @@ static int addNode(LinkedList* this, int nodeIndex,void* pElement)
     	{
     		if(nodeIndex == 0)
     		{
-    			pNode->pNextNode = this->pFirstNode;
-    			this->pFirstNode = pNode;
+    			pNode->pNextNode = this->pFirstNode; // sino perdemos la referencia
+    			this->pFirstNode = pNode; //
     			pNode->pElement = pElement;
     	    	this->size++;
     	    	returnAux = 0;
@@ -531,7 +531,7 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
     			auxElement2 = ll_get(this, i+1);
     			if((pFunc(auxElement,auxElement2) > 0 && order == 1) || (pFunc(auxElement,auxElement2) < 0 && order == 0))
     			{
-    				ll_set(this, i, auxElement2);
+    				ll_set(this, i, auxElement2); // swap
     				ll_set(this, i+1, auxElement);
     				estaOrdenado = 0;
     			}
@@ -542,4 +542,3 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
     }
     return returnAux;
 }
-

@@ -17,11 +17,12 @@
  */
 int controller_loadFromText(char* path , LinkedList* pArrayListPassenger)
 {
+
 	int retorno = -1;
 	FILE *pFile = NULL;
 	if(path != NULL && pArrayListPassenger != NULL)
 	{
-		pFile = fopen(path, "r");
+		pFile = fopen(path, "r"); // nombre del archivo y el modo de abrirlo
 		if(pFile != NULL)
 		{
 			if(!parser_PassengerFromText(pFile, pArrayListPassenger))
@@ -93,16 +94,15 @@ int controller_addPassenger(LinkedList* pArrayListPassenger)
 
 	if(pArrayListPassenger != NULL)
 	{
-		auxId = incrementarId();
-		if(auxId >= 0 &&
-			!utn_getNombre(auxNombre, LEN_NOMBRE, "Ingrese el nombre del pasajero:\n", "Error, Nombre no valido\n", 2) &&
+		if( !utn_getNombre(auxNombre, LEN_NOMBRE, "Ingrese el nombre del pasajero:\n", "Error, Nombre no valido\n", 2) &&
 			!utn_getNombre(auxApellido, LEN_APELLIDO, "Ingrese el apellido del pasajero:\n", "Error, apellido no valido\n", 2) &&
 			!utn_getNumeroFlotante(&auxPrecio, "Ingrese el precio del vuelo:\n", "Error, precio no valido\n", 0, 100000, 2) &&
 			!utn_getNumero(&auxTipoPasajero, "Ingrese tipo de pasajero:\nFirst Class[1] - Executive Class[2] - Economy Class[3]\n", "Error, opcion no valida\n", 1, 3, 2) &&
 			!utn_getCodigo(auxCodigoVuelo, LEN_CODIGO, "Ingrese codigo del vuelo:\n", "Error, codigo no valido\n", 2) &&
 			!utn_getNumero(&auxEstadoVuelo, "Ingrese el estado del vuelo:\nAterrizado[1] - En Horario[2] - En Vuelo[3] - Demorado[4]\n", "Error, codigo no valido\n", 1, 4, 2))
 		{
-			if(!Passenger_agregarArray(pArrayListPassenger,auxId, auxNombre, auxApellido, auxPrecio, auxTipoPasajero, auxCodigoVuelo, auxEstadoVuelo))
+			auxId = Passenger_idMaximo("id.csv"); // como obtengo el id
+			if(auxId >= 0 && !Passenger_agregarArray(pArrayListPassenger,auxId, auxNombre, auxApellido, auxPrecio, auxTipoPasajero, auxCodigoVuelo, auxEstadoVuelo))
 			{
 				retorno = 0;
 			}

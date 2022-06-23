@@ -63,11 +63,65 @@ void Passenger_delete(Passenger* this)
 	}
 }
 
-int incrementarId()
+/**************************************************************************************/
+
+int  Passenger_loadId(char* path)
 {
-    static int idPassenger = 1000;
-    idPassenger++;
-    return idPassenger;
+	FILE* pFile = NULL;
+	int cantidad;
+	char auxIdStr[1000];
+	int retorno = -1;
+
+	if(path != NULL)
+	{
+		pFile = fopen(path,"r");
+		if(pFile != NULL)
+		{
+			cantidad = fscanf(pFile, "%[^\n]\n",auxIdStr);
+			if(cantidad == 1 && esNumerica(auxIdStr, 1000))
+			{
+				retorno = atoi(auxIdStr);
+			}
+			fclose(pFile);
+		}
+	}
+	return retorno;
+}
+
+int Passenger_saveId(char* path,int id)
+{
+	int retorno = -1;
+	FILE* pFile = NULL;
+	if(path != NULL && id >= 0)
+	{
+		pFile = fopen(path,"w");
+		if(pFile != NULL)
+		{
+			fprintf(pFile,"%d",id);
+			fclose(pFile);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+int  Passenger_idMaximo(char* path)
+{
+	int idAux;
+	int retorno = -1;
+	if(path != NULL)
+	{
+		idAux = Passenger_loadId("id.csv");
+		if(idAux >= 0)
+		{
+			idAux++;
+			if(!Passenger_saveId("id.csv", idAux))
+			{
+				retorno = idAux;
+			}
+		}
+	}
+	return retorno;
 }
 
 /**************************************************************************************/
@@ -84,7 +138,6 @@ int Passenger_deleteIndexArray(LinkedList* listaPasajeros, int index)
 			Passenger_delete(pAuxPassager);
 			retorno = 0;
 		}
-
 	}
 	return retorno;
 }
@@ -204,7 +257,7 @@ int Passenger_buscarPorIdArray(LinkedList* listaPasajeros, int id)
 		{
 			for(int i = 0; i < longitud ; i++)
 			{
-				pAuxPassager = ll_get(listaPasajeros, i);
+				pAuxPassager = (Passenger*)ll_get(listaPasajeros, i); // esta casteado
 				Passenger_getId(pAuxPassager, &auxId);
 
 				if(pAuxPassager != NULL && auxId == id)

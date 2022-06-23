@@ -73,7 +73,7 @@ int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger)
 	{
 		do
 		{
-			cantidad = fread(&auxPassager,sizeof(Passenger),1,pFile);
+			cantidad = fread(&auxPassager,sizeof(Passenger),1,pFile); // destino,  sizeof tamaño del elemento , cantidad que quiero , origen
 			if(cantidad == 1)
 			{
 				pAuxPassager = Passenger_newParametros(auxPassager.id, auxPassager.nombre, auxPassager.apellido, auxPassager.precio, auxPassager.tipoPasajero, auxPassager.codigoVuelo, auxPassager.estadoVuelo);

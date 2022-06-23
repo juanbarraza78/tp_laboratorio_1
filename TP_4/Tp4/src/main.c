@@ -4,6 +4,9 @@
 #include "Controller.h"
 #include "Passenger.h"
 #include "utn.h"
+#include "informes.h"
+
+//informar solamente los que estan demorados. y ordenarlos de mayor a menor precio
 
 int main()
 {
@@ -11,8 +14,11 @@ int main()
 	LinkedList* listaPasajeros = ll_newLinkedList();
 	int opciones;
 	int cantidadGuardada;
+	int flagSave = 0;
+	int flagCerrar = 0;
 	do
 	{
+		flagCerrar = 0;
 		printf("\n ---Menu---\n");
 		printf("1) CARGAR DATOS(MODO TEXTO)\n");
 		printf("2) CARGAR DATOS(MODO BINARIO)\n");
@@ -24,7 +30,7 @@ int main()
 		printf("8) GUARDAR DATOS(MODO TEXTO)\n");
 		printf("9) GUARDAR DATOS(MODO BINARIO)\n");
 		printf("10) SALIR\n\n");
-		if(!utn_getNumero(&opciones, "Ingrese una opcion\n", "Error, Opcion invalida\n", 1, 10, 0))
+		if(!utn_getNumero(&opciones, "Ingrese una opcion\n", "Error, Opcion invalida\n", 1, 100, 0))
 		{
 			switch(opciones)
 			{
@@ -95,6 +101,7 @@ int main()
 					if(cantidadGuardada >= 0)
 					{
 						printf("se pudo guardar correctamente %d elementos\n", cantidadGuardada);
+						flagSave = 1;
 					}
 				}
 				else
@@ -109,6 +116,7 @@ int main()
 					if(cantidadGuardada >= 0)
 					{
 						printf("se pudo guardar correctamente %d elementos\n", cantidadGuardada);
+						flagSave = 1;
 					}
 				}
 				else
@@ -116,9 +124,15 @@ int main()
 					printf("No hay nada guardado\n");
 				}
 				break;
+			case 10:
+				flagCerrar = 1;
+				break;
+			case 11:
+
+				break;
 			}
 		}
-	}while(opciones != 10);
+	}while(!(flagCerrar == 1 && flagSave == 1));
 	return EXIT_SUCCESS;
 
 }
