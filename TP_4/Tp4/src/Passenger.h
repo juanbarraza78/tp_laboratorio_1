@@ -23,6 +23,7 @@ typedef struct
 	int tipoPasajero;
 	char codigoVuelo[LEN_CODIGO];
 	int estadoVuelo;
+	float millas;
 }Passenger;
 
 //char listTypePassenger[3][20] = {"FirstClass","ExecutiveClass","EconomyClass"};
@@ -50,8 +51,6 @@ int Passenger_buscarPorIdArray(LinkedList* listaPasajeros, int id);
 int Passenger_agregarArray(LinkedList* listaPasajeros, int id, char* nombre, char* apellido, float precio, int tipoPasajero, char* codigoVuelo, int estadoVuelo);
 int Passenger_borrarPorIdArray(LinkedList* listaPasajeros, int id);
 int Passenger_modificarPorIdArray(LinkedList* listaPasajeros, int id);
-int Passenger_sortNombre(void* parametro1, void* parametro2);
-int Passenger_sortprecio(void* parametro1, void* parametro2);
 int Passenger_convertirTipoPasajeroint(char* tipoPasajeroStr);
 int Passenger_convertirEstadoVueloSint(char* estadoVueloStr);
 
@@ -77,6 +76,9 @@ int Passenger_getCodigoVuelo(Passenger* this,char* codigoVuelo);
 
 int Passenger_setEstadoVuelo(Passenger* this,int estadoVuelo);
 int Passenger_getEstadoVuelo(Passenger* this,int* estadoVuelo);
+
+int Passenger_setMillas(Passenger* this,float millas);
+int Passenger_getMillas(Passenger* this,float* millas);
 
 int Passenger_setIdStr(Passenger* this,char* id);
 int Passenger_setPrecioStr(Passenger* this,char* precio);

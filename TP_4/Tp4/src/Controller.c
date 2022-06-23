@@ -5,8 +5,7 @@
 #include "Controller.h"
 #include "parser.h"
 #include "utn.h"
-
-
+#include "informes.h"
 
 /** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo texto).
  *

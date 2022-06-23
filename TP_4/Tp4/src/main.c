@@ -6,8 +6,6 @@
 #include "utn.h"
 #include "informes.h"
 
-//informar solamente los que estan demorados. y ordenarlos de mayor a menor precio
-
 int main()
 {
 	setbuf(stdout, NULL);
@@ -16,6 +14,10 @@ int main()
 	int cantidadGuardada;
 	int flagSave = 0;
 	int flagCerrar = 0;
+
+	int acomulardor = 0;
+	LinkedList* listaPasajerosAuxiliar;
+
 	do
 	{
 		flagCerrar = 0;
@@ -29,8 +31,11 @@ int main()
 		printf("7) ORDENAR\n");
 		printf("8) GUARDAR DATOS(MODO TEXTO)\n");
 		printf("9) GUARDAR DATOS(MODO BINARIO)\n");
-		printf("10) SALIR\n\n");
-		if(!utn_getNumero(&opciones, "Ingrese una opcion\n", "Error, Opcion invalida\n", 1, 100, 0))
+		printf("10) PASAJEROS POR CLASE\n");
+		printf("11) GENERAR Y MOSTRAR ARCHIVO DE VUELOS\n");
+		printf("12) CALCULAR MILLAS ACUMULADAS\n");
+		printf("13) SALIR\n\n");
+		if(!utn_getNumero(&opciones, "Ingrese una opcion\n", "Error, Opcion invalida\n", 1, 13, 0))
 		{
 			switch(opciones)
 			{
@@ -125,14 +130,61 @@ int main()
 				}
 				break;
 			case 10:
-				flagCerrar = 1;
+				if(!ll_isEmpty(listaPasajeros))
+				{
+					acomulardor = ll_count(listaPasajeros, Passenger_acomularEconomico);
+					if(acomulardor > 0)
+					{
+						printf("La cantidad de pasajeros de clase economica son: %d\n",acomulardor);
+					}
+					acomulardor = ll_count(listaPasajeros, Passenger_acomularEjecutivo);
+					if(acomulardor > 0)
+					{
+						printf("La cantidad de pasajeros de clase ejecutiva son: %d\n",acomulardor);
+					}
+					acomulardor = ll_count(listaPasajeros, Passenger_acomularPrimera);
+					if(acomulardor > 0)
+					{
+						printf("La cantidad de pasajeros de primera clase son: %d\n",acomulardor);
+					}
+				}
+				else
+				{
+					printf("No hay nada guardado\n");
+				}
 				break;
 			case 11:
-
+				if(!ll_isEmpty(listaPasajeros))
+				{
+					listaPasajerosAuxiliar = ll_filter(listaPasajeros, Passenger_filtrarTipoPasageroFirstClass);
+					if(listaPasajerosAuxiliar != NULL)
+					{
+						controller_ListPassenger(listaPasajerosAuxiliar);
+						controller_saveAsText("auxiliar.csv", listaPasajerosAuxiliar);
+					}
+				}
+				else
+				{
+					printf("No hay nada guardado\n");
+				}
+				break;
+			case 12:
+				if(!ll_isEmpty(listaPasajeros))
+				{
+					ll_map(listaPasajeros, Passenger_imprimirConMIllas);
+				}
+				else
+				{
+					printf("No hay nada guardado\n");
+				}
+				break;
+			case 13:
+				flagCerrar = 1;
 				break;
 			}
 		}
 	}while(!(flagCerrar == 1 && flagSave == 1));
 	return EXIT_SUCCESS;
-
 }
+
+

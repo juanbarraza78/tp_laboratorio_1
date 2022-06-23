@@ -392,44 +392,6 @@ int Passenger_modificarPorIdArray(LinkedList* listaPasajeros, int id)
 	return retorno;
 }
 
-int Passenger_sortNombre(void* parametro1, void* parametro2)
-{
-    int retorno = -1;
-    char auxNombre1[LEN_NOMBRE];
-    char auxNombre2[LEN_NOMBRE];
-
-    if(parametro1 != NULL && parametro2 != NULL)
-    {
-    	Passenger_getNombre(parametro1, auxNombre1);
-    	Passenger_getNombre(parametro2, auxNombre2);
-
-		if(strcmp(auxNombre1,auxNombre2)>0)
-		{
-			retorno = 1;
-		}
-    }
-
-    return retorno;
-}
-int Passenger_sortprecio(void* parametro1, void* parametro2) // podria hacer otro sort
-{
-    int retorno = -1;
-    float precio1;
-    float precio2;
-
-    if(parametro1!=NULL && parametro2!=NULL)
-    {
-    	Passenger_getPrecio(parametro1, &precio1);
-    	Passenger_getPrecio(parametro2, &precio2);
-        if(precio1 > precio2)
-        {
-        	retorno = 1;
-        }
-
-    }
-    return retorno;
-}
-
 int Passenger_convertirTipoPasajeroint(char* tipoPasajeroStr)
 {
 	int retorno = -1;
@@ -629,6 +591,28 @@ int Passenger_getEstadoVuelo(Passenger* this,int* estadoVuelo)
 	}
 	return retorno;
 }
+
+int Passenger_setMillas(Passenger* this,float millas)
+{
+	int retorno = -1;
+	if(this != NULL && millas >= 0)
+	{
+		this->millas = millas;
+		retorno = 0;
+	}
+	return retorno;
+}
+int Passenger_getMillas(Passenger* this,float* millas)
+{
+	int retorno = -1;
+	if(this != NULL && millas != NULL)
+	{
+		*millas = this->millas;
+		retorno = 0;
+	}
+	return retorno;
+}
+
 
 /**********************/
 
