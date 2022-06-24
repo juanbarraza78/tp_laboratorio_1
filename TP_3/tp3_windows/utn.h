@@ -27,4 +27,9 @@ int getCodigo(char codigo[], int len);
 int esCodigo(char* cadena, int limite);
 int utn_getCodigo(char codigo[], int len, char mensaje[], char mensajeError[], int reintentos);
 
+int utn_getPath(char path[], int len, char mensaje[], char mensajeError[], int reintentos);
+int getPath(char path[], int len);
+int esPath(char* cadena, int limite);
+
+
 #endif
