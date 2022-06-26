@@ -7,9 +7,6 @@
 #include <string.h>
 #include "entrada_validaciones_datos.h"
 
-char listTypePassenger[3][20] = {"Primera clase","Clase ejecutiva","Clase turista"};
-char listStatusFlight[2][20] = {"ACTIVO","INACTIVO"};
-
 /** \brief inicializa una array de passenger (isEmpty = 1)
 * \param list Passenger* se ingresa una arry del tipo Passenger
 * \param len int se ingresa la longitud del array
@@ -53,10 +50,10 @@ int addPassengerForzado(Passenger pArray[], int len,int* id,char name[],char las
 			{
 				(*id)++;
 				pArray[i].id = *id;
-				strcpy(pArray[i].name,name);
-				strcpy(pArray[i].lastName,lastname);
+				strncpy(pArray[i].name,name,LEN_NAME);
+				strncpy(pArray[i].lastName,lastname,LEN_LASTNAME);
 				pArray[i].price = price;
-				strcpy(pArray[i].flycode, flyCode);
+				strncpy(pArray[i].flycode, flyCode,LEN_FLYCODE);
 				pArray[i].typePassenger = typePassenger;
 				pArray[i].statusFlight = statusFlight;
 				pArray[i].isEmpty = 0;
@@ -91,12 +88,11 @@ int addPassenger(Passenger* list, int len, int id, char name[],char lastName[],f
 		{
 			if(list[i].isEmpty == 1)
 			{
-
 				list[i].id = id;
-				strcpy(list[i].name,name);
-				strcpy(list[i].lastName,lastName);
+				strncpy(list[i].name,name,LEN_NAME);
+				strncpy(list[i].lastName,lastName,LEN_LASTNAME);
 				list[i].price = price;
-				strcpy(list[i].flycode,flycode);
+				strncpy(list[i].flycode,flycode,LEN_FLYCODE);
 				list[i].typePassenger = typePassenger;
 				list[i].statusFlight = statusFlight;
 				list[i].isEmpty = 0;
@@ -127,11 +123,11 @@ int utn_getDatosPassager(int* id, char name[],int lenName, char lastName[],int l
 {
 	int retorno = -1;
 	if(!utn_getNombre(name, lenName, "Ingrese su nombre del pasajero:\n", "Error, Nombre no valido\n", 2) &&
-			!utn_getNombre(lastName, lenLastName, "Ingrese su apellido del pasajero:\n", "Error, apellido no valido\n", 2) &&
-			!utn_getNumeroFlotante(price, "Ingrese precio del vuelo:\n", "Error, precio no valido\n", 0, 1000000, 2) &&
-			!utn_getNumero(typePassanger, "Ingrese tipo de pasajero:\nPrimera clase[1] - Clase ejecutiva[2] - Clase turista[3]\n", "Error, opcion no valida\n", 1, 3, 2) &&
-			!utn_getCodigo(flyCode, lenFlyCode, "Ingrese codigo del vuelo:\n", "Error, codigo no valido\n", 2) &&
-			!utn_getNumero(statusFlight, "Ingrese estado del vuelo: ACTIVO[1] - INACTIVO[2]\n", "Error, opcion no valida\n", 1, 2, 2))
+	   !utn_getNombre(lastName, lenLastName, "Ingrese su apellido del pasajero:\n", "Error, apellido no valido\n", 2) &&
+	   !utn_getNumeroFlotante(price, "Ingrese precio del vuelo:\n", "Error, precio no valido\n", 0, 1000000, 2) &&
+	   !utn_getNumero(typePassanger, "Ingrese tipo de pasajero:\nPrimera clase[1] - Clase ejecutiva[2] - Clase turista[3]\n", "Error, opcion no valida\n", 1, 3, 2) &&
+	   !utn_getCodigo(flyCode, lenFlyCode, "Ingrese codigo del vuelo:\n", "Error, codigo no valido\n", 2) &&
+	   !utn_getNumero(statusFlight, "Ingrese estado del vuelo: Aterrizado[1] - En Horario[2] - En Vuelo[3] - Demorado[4]\n", "Error, opcion no valida\n", 1, 2, 2))
 	{
 		retorno = 0;
 		(*id)++;
@@ -146,10 +142,12 @@ int utn_getDatosPassager(int* id, char name[],int lenName, char lastName[],int l
 */
 void mostrarPassenger(Passenger pasajero)
 {
-	if (pasajero.isEmpty == 0)
+	char tipoPasajeroStr[LEN_TYPE_PASSENGER];
+	char estadoVueloStr[LEN_STATUS_FLIGHT];
+	if (pasajero.isEmpty == 0 && !convertirTipoPasajeroStr(pasajero.typePassenger, tipoPasajeroStr) && !convertirEstadoVueloStr(pasajero.statusFlight, estadoVueloStr))
 	{
-		printf("Id: %d - Nombre: %s - Apellido: %s -  Precio: %f - Codigo: %s - Tipo %s - Estado %s \n",
-				pasajero.id, pasajero.name, pasajero.lastName, pasajero.price, pasajero.flycode, listTypePassenger[pasajero.typePassenger -1], listStatusFlight[pasajero.statusFlight -1]);
+		printf("|%*d|%*s|%*s|%*.2f|%*s|%*s|%*s|\n", -15, pasajero.id, -15, pasajero.name, -15, pasajero.lastName, -16, pasajero.price, -16, tipoPasajeroStr, -15,
+				pasajero.flycode, -15, estadoVueloStr);
 	}
 }
 
@@ -165,6 +163,9 @@ int printPassengers(Passenger pArray[], int len)
 	int retorno = -1;
 	if (pArray != NULL && len > 0)
 	{
+		printf("+-----------------------------------------------------------------------------------------------------------------+");
+		printf("\n|%*s|%*s|%*s|%*s|%*s|%*s|%*s|\n", -15,"ID DEL PASAJERO", -15, "NOMBRE", -15, "APELLIDO", -15, "PRECIO DEL VUELO", -15, "TIPO DE PASAJERO", -15, "CODIGO DE VUELO", -15, "ESTADO DE VUELO");
+		printf("+---------------+---------------+---------------+----------------+----------------+-------------------------------+\n");
 		for(int i = 0; i < len; i++)
 		{
 			mostrarPassenger(pArray[i]);
@@ -200,13 +201,13 @@ int modificarPasajero(Passenger pArray[], int len, int idPassenger)
 								switch(opcionesBuffer)
 								{
 								case 1:
-									if(!utn_getNombre(pArray[index].name, 51, "Ingrese el nombre del pasajero:\n", "Error, Nombre no valido\n", 0))
+									if(!utn_getNombre(pArray[index].name, LEN_NAME, "Ingrese el nombre del pasajero:\n", "Error, Nombre no valido\n", 0))
 									{
 										retorno = 0;
 									}
 									break;
 								case 2:
-									if(!utn_getNombre(pArray[index].lastName, 51, "Ingrese el apellido del pasajero:\n", "Error, apellido no valido\n", 0))
+									if(!utn_getNombre(pArray[index].lastName, LEN_LASTNAME, "Ingrese el apellido del pasajero:\n", "Error, apellido no valido\n", 0))
 									{
 										retorno = 0;
 									}
@@ -224,7 +225,7 @@ int modificarPasajero(Passenger pArray[], int len, int idPassenger)
 									}
 									break;
 								case 5:
-									if(!utn_getCodigo(pArray[index].flycode, 20, "Ingrese codigo del vuelo:\n", "Error, codigo no valido\n", 0))
+									if(!utn_getCodigo(pArray[index].flycode, LEN_FLYCODE, "Ingrese codigo del vuelo:\n", "Error, codigo no valido\n", 0))
 									{
 										retorno = 0;
 									}
@@ -282,7 +283,7 @@ int removePassenger(Passenger* list, int len, int id)
 		index = findPassengerById(list, len, id);
 		if(index != -1)
 		{
-			printf("Estas seguro de eliminar a: ");
+			printf("Estas seguro de eliminar a: \n");
 			mostrarPassenger(list[index]);
 			if(!utn_getNumero(&opcionesBuffer, "SI[1] - NO[2]\n", "Opcion no valida\n", 1, 2, 1))
 			{
@@ -291,7 +292,6 @@ int removePassenger(Passenger* list, int len, int id)
 					list[index].isEmpty = 1;
 					retorno = 0;
 				}
-
 			}
 		}
 
@@ -329,62 +329,36 @@ int hayAlgoCargado(Passenger pArray[], int len)
 * \param order int indica [1] si es de forma asendente - [0] de fotma decendente
 * \return int retorna un -1 si hay algun error y 0 si funciono correctamente
 */
-int sortPassengers(Passenger* list, int len, int order)
+int sortPassengersByLastNameAndTypePassenger(Passenger* list, int len, int order)
 {
-	int flagSwap;
+	int estaOrdenado;
 	int i;
 	int retorno = -1;
 	Passenger bufferPassenger;
-	int nuevoLimite;
+	char tipoPasajeroStr[124];
+	char tipoPasajeroStr2[124];
 
 	if(list != NULL && len >= 0)
 	{
-		nuevoLimite = len - 1;
 		do{
-			flagSwap = 0;
-			for(i = 0; i < nuevoLimite; i++)
+			len--;
+			estaOrdenado = 0;
+			for(i = 0; i < len; i++)
 			{
-				if(order == 0)
+				retorno = 0;
+				convertirTipoPasajeroStr(list[i].typePassenger, tipoPasajeroStr);
+				convertirTipoPasajeroStr(list[i+1].typePassenger, tipoPasajeroStr2);
+
+				if((order == 0 && ((strcmp(list[i].lastName,list[i+1].lastName) < 0) || (stricmp(list[i].lastName,list[i+1].lastName) == 0 && strcmp(tipoPasajeroStr,tipoPasajeroStr2) < 0))) ||
+				   (order == 1 && ((strcmp(list[i].lastName,list[i+1].lastName) > 0) || (stricmp(list[i].lastName,list[i+1].lastName) == 0 && strcmp(tipoPasajeroStr,tipoPasajeroStr2) > 0))))
 				{
-					retorno = 0;
-					if(strcmp(list[i].lastName,list[i+1].lastName) < 0)
-					{
-						flagSwap = 1;
-						bufferPassenger = list[i];
-						list[i] = list[i+1];
-						list[i+1] = bufferPassenger;
-					}
-					else if(strcmp(list[i].lastName,list[i+1].lastName) == 0 &&
-							list[i].typePassenger < list[i+1].typePassenger)
-					{
-						flagSwap = 1;
-						bufferPassenger = list[i];
-						list[i] = list[i+1];
-						list[i+1] = bufferPassenger;
-					}
+					estaOrdenado = 1;
+					bufferPassenger = list[i];
+					list[i] = list[i+1];
+					list[i+1] = bufferPassenger;
 				}
-				else if(order == 1)
-				{
-					retorno = 0;
-					if(strcmp(list[i].lastName,list[i+1].lastName) > 0)
-					{
-						flagSwap = 1;
-						bufferPassenger = list[i];
-						list[i] = list[i+1];
-						list[i+1] = bufferPassenger;
-					}
-					else if(strcmp(list[i].lastName,list[i+1].lastName) == 0 &&
-							list[i].typePassenger > list[i+1].typePassenger)
-					{
-						flagSwap = 1;
-						bufferPassenger = list[i];
-						list[i] = list[i+1];
-						list[i+1] = bufferPassenger;
-					}
-				}
-				nuevoLimite--;
 			}
-		}while(flagSwap);
+		}while(estaOrdenado);
 	}
 	return retorno;
 }
@@ -410,29 +384,15 @@ int sortPassengersByCode(Passenger* list, int len, int order)
 			flagSwap = 0;
 			for(i = 0; i < nuevoLimite; i++)
 			{
-				if(order == 0)
-				{
 					retorno = 0;
-					if(strcmp(list[i].flycode,list[i+1].flycode) < 0)
+					if((strcmp(list[i].flycode,list[i+1].flycode) < 0 && order == 0) || (strcmp(list[i].flycode,list[i+1].flycode) > 0 && order == 1))
 					{
 						flagSwap = 1;
 						bufferPassenger = list[i];
 						list[i] = list[i+1];
 						list[i+1] = bufferPassenger;
 					}
-				}
-				else if(order == 1)
-				{
-					retorno = 0;
-					if(strcmp(list[i].flycode,list[i+1].flycode) > 0)
-					{
-						flagSwap = 1;
-						bufferPassenger = list[i];
-						list[i] = list[i+1];
-						list[i+1] = bufferPassenger;
-					}
-				}
-				nuevoLimite--;
+			nuevoLimite--;
 			}
 		}while(flagSwap);
 	}
@@ -492,28 +452,86 @@ int MostrarPromedioYTotalDePrecioPasajeros(Passenger* list, int len)
 */
 int filtrarYMostrarPorStatusVuelo(Passenger* list, int len)
 {
-	Passenger PassengersList[2000];
-
-	initPassengers(PassengersList, 2000);
+	Passenger PassengersList[PASSENGER_LEN];
+	int opcion;
+	initPassengers(PassengersList, PASSENGER_LEN);
 
 	int retorno = -1;
 	int contador = 0;
 	if(list != NULL && len > 0)
 	{
-		for(int i = 0; i < len; i++)
+		if(!utn_getNumero(&opcion, "Ingrese una opcion\n1)Decendente\n2)Asendente\n", "Error, opcion invalida", 1, 2, 1))
 		{
-			if(list[i].statusFlight == 1 && list[i].isEmpty == 0)
+			for(int i = 0; i < len; i++)
 			{
-				PassengersList[contador] = list[i];
-				contador++;
-
+				if(list[i].statusFlight == 1 && list[i].isEmpty == 0)
+				{
+					PassengersList[contador] = list[i];
+					contador++;
+				}
+			}
+			if(!sortPassengersByCode(PassengersList, PASSENGER_LEN, opcion-1) && printPassengers(PassengersList, PASSENGER_LEN))
+			{
+				retorno = 0;
 			}
 		}
-		if(!sortPassengersByCode(PassengersList, 2000, 1) && printPassengers(PassengersList, 2000))
-		{
-			retorno = 0;
-		}
-
 	}
 	return retorno;
 }
+
+/** \brief convierte el campo typePassenger en un cadena de texto
+* \param tipoPasajero int valor a convertir
+* \param tipoPasajeroStr char* resultado
+* \return int retorna un (-1) si hubo un error o (0) si funciono correctamente
+*/
+int convertirTipoPasajeroStr(int tipoPasajero, char* tipoPasajeroStr)
+{
+	int retorno = -1;
+	switch(tipoPasajero)
+	{
+	case 1:
+		strncpy(tipoPasajeroStr,"Primera clase\0",LEN_TYPE_PASSENGER);
+		retorno = 0;
+		break;
+	case 2:
+		strncpy(tipoPasajeroStr,"Clase ejecutiva\0",LEN_TYPE_PASSENGER);
+		retorno = 0;
+		break;
+	case 3:
+		strncpy(tipoPasajeroStr,"Clase turista\0",LEN_TYPE_PASSENGER);
+		retorno = 0;
+		break;
+	}
+	return retorno;
+}
+
+/** \brief convierte el campo statusFlight en un cadena de texto
+* \param estadoVuelo int valor a convertir
+* \param estadoVueloStr char* resultado
+* \return int retorna un (-1) si hubo un error o (0) si funciono correctamente
+*/
+int convertirEstadoVueloStr(int estadoVuelo, char* estadoVueloStr)
+{
+	int retorno = -1;
+	switch(estadoVuelo)
+	{
+	case 1:
+		strncpy(estadoVueloStr,"Activo\0",LEN_STATUS_FLIGHT);
+		retorno = 0;
+		break;
+	case 2:
+		strncpy(estadoVueloStr,"En Horario\0",LEN_STATUS_FLIGHT);
+		retorno = 0;
+		break;
+	case 3:
+		strncpy(estadoVueloStr,"En Vuelo\0",LEN_STATUS_FLIGHT);
+		retorno = 0;
+		break;
+	case 4:
+		strncpy(estadoVueloStr,"Demorado\0",LEN_STATUS_FLIGHT);
+		retorno = 0;
+		break;
+	}
+	return retorno;
+}
+

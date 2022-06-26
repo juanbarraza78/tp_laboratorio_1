@@ -9,8 +9,6 @@
 #include "ArrayPassenger.h"
 #include "entrada_validaciones_datos.h"
 
-#define PASSENGER_LEN 2000
-
 int main(void) {
 	setbuf(stdout, NULL);
 
@@ -25,8 +23,8 @@ int main(void) {
 	char auxFlycode[20];
 	int auxTypePassenger;
 	int auxStatusFlight;
-
-	int idPassengers = 1;
+	int opcionOrden;
+	int idPassengers = 0;
 
 	initPassengers(passengersArray, PASSENGER_LEN);
 
@@ -38,13 +36,13 @@ int main(void) {
 		printf("4) INFORMAR\n");
 		printf("5) ALTA FORZADA\n");
 		printf("6) LISTAR\n");
-		printf("7) Salir\n\n");
+		printf("7) SALIR\n\n");
 		if(!utn_getNumero(&opciones, "Ingrese una opcion\n", "Error, No existe esa opcion\n", 1, 7, 0))
 		{
 			switch(opciones)
 			{
 			case 1:
-				if(!utn_getDatosPassager(&idPassengers, auxName, 51, auxLastName, 51, &auxPrice, &auxTypePassenger, auxFlycode, 20, &auxStatusFlight) &&
+				if(!utn_getDatosPassager(&idPassengers, auxName, LEN_NAME, auxLastName, LEN_LASTNAME, &auxPrice, &auxTypePassenger, auxFlycode, LEN_FLYCODE, &auxStatusFlight) &&
 						!addPassenger(passengersArray, PASSENGER_LEN, idPassengers, auxName, auxLastName, auxPrice, auxTypePassenger, auxFlycode, auxStatusFlight))
 				{
 					printf("El pasajero se cargo correctamente\n");
@@ -57,7 +55,9 @@ int main(void) {
 			case 2:
 				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
 				{
-					if(!utn_getNumero(&auxId, "Ingrese el Id que quiere modificar\n", "Error, id incorrecto\n", 0, 4000, 2) &&
+					printPassengers(passengersArray, PASSENGER_LEN);
+
+					if(!utn_getNumero(&auxId, "\nIngrese el Id que quiere modificar\n", "Error, id incorrecto\n", 0, 4000, 2) &&
 											!modificarPasajero(passengersArray, PASSENGER_LEN, auxId))
 					{
 						printf("Se pudo modificar correctamente\n");
@@ -75,8 +75,10 @@ int main(void) {
 			case 3:
 				if(hayAlgoCargado(passengersArray, PASSENGER_LEN) == 1)
 				{
+					printPassengers(passengersArray, PASSENGER_LEN);
+
 					if(!utn_getNumero(&auxId, "Ingrese el Id que quiere eliminar\n", "Error, id incorrecto\n", 0, 4000, 2) &&
-											removePassenger(passengersArray, PASSENGER_LEN, auxId) == 0)
+									 removePassenger(passengersArray, PASSENGER_LEN, auxId) == 0)
 					{
 						printf("Se pudo eliminar correctamente\n");
 					}
@@ -102,8 +104,9 @@ int main(void) {
 						switch(opcionesDos)
 						{
 						case 1:
-							if(!sortPassengers(passengersArray, PASSENGER_LEN,1))
+							if(!utn_getNumero(&opcionOrden, "Ingrese una opcion\n1)Decendente\n2)Asendente\n", "Error, opcion invalida", 1, 2, 1))
 							{
+								sortPassengersByLastNameAndTypePassenger(passengersArray, PASSENGER_LEN,(opcionOrden-1));
 								printPassengers(passengersArray, PASSENGER_LEN);
 							}
 							break;
@@ -122,16 +125,16 @@ int main(void) {
 				}
 				break;
 			case 5:
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "juan", "barraza", 100, "xxb5q", 1, 2);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pedro", "lomaz", 100, "zz71", 2, 1);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "ricardo", "coco", 100, "1asd", 3, 1);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "tomas", "rios", 200, "aaww2", 2, 1);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pepe", "aliz", 200, "bcddd1", 1, 2);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "pepito", "xom", 300, "cbbb44", 3, 1);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "ale", "zom", 300, "dbbb44", 3, 2);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "bal", "yom", 300, "ebbb44", 3, 1);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "ale", "zom", 300, "fbbb44", 2, 2);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "ale", "zom", 300, "abbb44", 1, 2);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Juan", "ZZZ", 100, "xxb5q", 1, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Pedro", "ZZZ", 100, "zz71", 2, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Ricardo", "ZZZ", 200, "1asd", 3, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Tomas", "Rios", 200, "aaww2", 2, 2);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Marcelo", "Gonzales", 200, "bcddd1", 1, 2);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Nacho", "Fernandes", 300, "cbbb44", 3, 3);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Alejandro", "Dias", 300, "dbbb44", 3, 3);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Bastian", "Acosta", 300, "ebbb44", 3, 4);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Catriel", "Lomas", 300, "fbbb44", 2, 4);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Zalgo", "Barraza", 300, "abbb44", 1, 4);
 				break;
 			case 6:
 				printPassengers(passengersArray, PASSENGER_LEN);

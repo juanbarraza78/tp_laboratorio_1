@@ -4,12 +4,19 @@
 #ifndef ARRAYPASSENGER_H_
 #define ARRAYPASSENGER_H_
 
+#define LEN_NAME 51
+#define LEN_LASTNAME 51
+#define LEN_FLYCODE 20
+#define LEN_STATUS_FLIGHT 124
+#define LEN_TYPE_PASSENGER 124
+#define PASSENGER_LEN 2000
+
 typedef struct {
 	int id;
-	char name[51];
-	char lastName[51];
+	char name[LEN_NAME];
+	char lastName[LEN_LASTNAME];
 	float price;
-	char flycode[20];
+	char flycode[LEN_FLYCODE];
 	int typePassenger;
 	int statusFlight;
 	int isEmpty;
@@ -25,9 +32,12 @@ int modificarPasajero(Passenger pArray[], int len, int idPassenger);
 int findPassengerById(Passenger* list, int len,int id);
 int removePassenger(Passenger* list, int len, int id);
 int hayAlgoCargado(Passenger pArray[], int len);
-int sortPassengers(Passenger* list, int len, int order);
+int sortPassengersByLastNameAndTypePassenger(Passenger* list, int len, int order);
 int sortPassengersByCode(Passenger* list, int len, int order);
 int MostrarPromedioYTotalDePrecioPasajeros(Passenger* list, int len);
 int filtrarYMostrarPorStatusVuelo(Passenger* list, int len);
+int convertirTipoPasajeroStr(int tipoPasajero, char* tipoPasajeroStr);
+int convertirEstadoVueloStr(int estadoVuelo, char* estadoVueloStr);
+
 
 #endif
