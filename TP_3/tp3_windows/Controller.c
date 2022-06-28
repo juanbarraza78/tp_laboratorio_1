@@ -92,12 +92,12 @@ int controller_addPassenger(LinkedList* pArrayListPassenger)
 
 	if(pArrayListPassenger != NULL)
 	{
-		if( !utn_getNombre(auxNombre, LEN_NOMBRE, "Ingrese el nombre del pasajero:\n", "Error, Nombre no valido\n", 2) &&
-			!utn_getNombre(auxApellido, LEN_APELLIDO, "Ingrese el apellido del pasajero:\n", "Error, apellido no valido\n", 2) &&
-			!utn_getNumeroFlotante(&auxPrecio, "Ingrese el precio del vuelo:\n", "Error, precio no valido\n", 0, 100000, 2) &&
-			!utn_getNumero(&auxTipoPasajero, "Ingrese tipo de pasajero:\nFirst Class[1] - Executive Class[2] - Economy Class[3]\n", "Error, opcion no valida\n", 1, 3, 2) &&
-			!utn_getCodigo(auxCodigoVuelo, LEN_CODIGO, "Ingrese codigo del vuelo:\n", "Error, codigo no valido\n", 2) &&
-			!utn_getNumero(&auxEstadoVuelo, "Ingrese el estado del vuelo:\nAterrizado[1] - En Horario[2] - En Vuelo[3] - Demorado[4]\n", "Error, codigo no valido\n", 1, 4, 2))
+		if( !utn_getNombre(auxNombre, LEN_NOMBRE, "Ingrese el nombre del pasajero: \n", "Error, Nombre no valido\n", 2) &&
+			!utn_getNombre(auxApellido, LEN_APELLIDO, "Ingrese el apellido del pasajero: \n", "Error, apellido no valido\n", 2) &&
+			!utn_getNumeroFlotante(&auxPrecio, "Ingrese el precio del vuelo: \n", "Error, precio no valido\n", 0, 100000, 2) &&
+			!utn_getNumero(&auxTipoPasajero, "Ingrese tipo de pasajero: \nFirst Class[1] - Executive Class[2] - Economy Class[3]\n", "Error, opcion no valida\n", 1, 3, 2) &&
+			!utn_getCodigo(auxCodigoVuelo, LEN_CODIGO, "Ingrese codigo del vuelo: \n", "Error, codigo no valido\n", 2) &&
+			!utn_getNumero(&auxEstadoVuelo, "Ingrese el estado del vuelo: \nAterrizado[1] - En Horario[2] - En Vuelo[3] - Demorado[4]\n", "Error, codigo no valido\n", 1, 4, 2))
 		{
 			auxId = Passenger_idMaximo("id.csv");
 			if(auxId >= 0 && !Passenger_agregarArray(pArrayListPassenger,auxId, auxNombre, auxApellido, auxPrecio, auxTipoPasajero, auxCodigoVuelo, auxEstadoVuelo))
@@ -122,7 +122,7 @@ int controller_editPassenger(LinkedList* pArrayListPassenger)
 	if(pArrayListPassenger != NULL)
 	{
 		Passenger_imprimirArray(pArrayListPassenger);
-		if(!utn_getNumero(&auxDni, "Ingrese Dni de la persona a modificar\n", "Error, Dni no valido\n", 1, 10000, 1) &&
+		if(!utn_getNumero(&auxDni, "Ingrese Dni de la persona a modificar \n", "Error, Dni no valido\n", 1, 10000, 2) &&
 		   !Passenger_modificarPorIdArray(pArrayListPassenger, auxDni))
 		{
 			retorno = 0;
@@ -146,7 +146,7 @@ int controller_removePassenger(LinkedList* pArrayListPassenger)
 	if(pArrayListPassenger != NULL)
 	{
 		Passenger_imprimirArray(pArrayListPassenger);
-		if(!utn_getNumero(&auxDni, "Ingrese Dni de la persona a modificar\n", "Error, Dni no valido\n", 1, 10000, 1) &&
+		if(!utn_getNumero(&auxDni, "Ingrese Dni de la persona a modificar \n", "Error, Dni no valido\n", 1, 10000, 2) &&
 		   !Passenger_borrarPorIdArray(pArrayListPassenger, auxDni))
 		{
 			retorno = 0;
@@ -185,8 +185,8 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger)
 	int Orden;
 	if(pArrayListPassenger != NULL)
 	{
-		if(!utn_getNumero(&tipoClasificacion, "Ingrese forma de ordenar:\n1)Dni\n2)Nombre\n3)Apellido\n4)Precio\n5)Tipo de pasajero\n6)Codigo de vuelo\n7)Estado del vuelo\n", "Error, opcion invalida", 1, 7, 2) &&
-		   !utn_getNumero(&Orden, "Indeque el orden:\n1)Desendente\n2)Asendente\n", "Error, opcion invalida", 1, 2, 2))
+		if(!utn_getNumero(&tipoClasificacion, "Ingrese forma de ordenar: \n1)Dni\n2)Nombre\n3)Apellido\n4)Precio\n5)Tipo de pasajero\n6)Codigo de vuelo\n7)Estado del vuelo\n", "Error, opcion invalida", 1, 7, 2) &&
+		   !utn_getNumero(&Orden, "Indeque el orden: \n1)Desendente\n2)Asendente\n", "Error, opcion invalida", 1, 2, 2))
 		{
 			switch(tipoClasificacion)
 			{

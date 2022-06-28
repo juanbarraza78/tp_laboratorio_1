@@ -516,11 +516,11 @@ int Passenger_modificarPorIdArray(LinkedList* listaPasajeros, int id)
 
 /**************************************************************************************/
 
-/** \brief compara el id de dos pasajeros y si el primero es mayor que el segundo retorna 1
+/** \brief compara el id de dos pasajeros
  *
  * \param parametro1 void* primer pasajero
  * \param parametro2 void* segundo pasajero
- * \return int retorna 1 si el id del primero es mayor que del segundo o -1 sino
+ * \return int retorna 1 si el id es mayor que del segundo, 0 si son iguales y -1 si no se cumple ninguna de las 2
  *
  */
 int Passenger_sortId(void* parametro1, void* parametro2)
@@ -537,16 +537,19 @@ int Passenger_sortId(void* parametro1, void* parametro2)
         {
         	retorno = 1;
         }
-
+        else if(auxId1 ==auxId2)
+        {
+        	retorno = 0;
+        }
     }
     return retorno;
 }
 
-/** \brief compara el nombre de dos pasajeros y si el primero es mayor que el segundo retorna 1
+/** \brief compara el nombre de dos pasajeros
  *
  * \param parametro1 void* primer pasajero
  * \param parametro2 void* segundo pasajero
- * \return int retorna 1 si el nombre del primero es mayor que del segundo o -1 sino
+ * \return int retorna 1 si el nombre es mayor que del segundo, 0 si son iguales y -1 si no se cumple ninguna de las 2
  *
  */
 int Passenger_sortNombre(void* parametro1, void* parametro2)
@@ -564,16 +567,20 @@ int Passenger_sortNombre(void* parametro1, void* parametro2)
 		{
 			retorno = 1;
 		}
+        else if(strcmp(auxNombre1,auxNombre2) == 0)
+        {
+        	retorno = 0;
+        }
     }
 
     return retorno;
 }
 
-/** \brief compara el apellido de dos pasajeros y si el primero es mayor que el segundo retorna 1
+/** \brief compara el apellido de dos pasajeros
  *
  * \param parametro1 void* primer pasajero
  * \param parametro2 void* segundo pasajero
- * \return int retorna 1 si el apellido del primero es mayor que del segundo o -1 sino
+ * \return int retorna 1 si el apellido es mayor que del segundo, 0 si son iguales y -1 si no se cumple ninguna de las 2
  *
  */
 int Passenger_sortApellido(void* parametro1, void* parametro2)
@@ -591,15 +598,19 @@ int Passenger_sortApellido(void* parametro1, void* parametro2)
 		{
 			retorno = 1;
 		}
+        else if(strcmp(auxApellido1,auxApellido2) == 0)
+        {
+        	retorno = 0;
+        }
     }
     return retorno;
 }
 
-/** \brief compara el precio de dos pasajeros y si el primero es mayor que el segundo retorna 1
+/** \brief compara el precio de dos pasajeros
  *
  * \param parametro1 void* primer puntero pasajero
  * \param parametro2 void* segundo puntero pasajero
- * \return int retorna 1 si el precio del primero es mayor que del segundo o -1 sino
+ * \return int retorna 1 si el precio del primero es mayor que del segundo, 0 si son iguales y -1 si no se cumple ninguna de las 2
  *
  */
 int Passenger_sortprecio(void* parametro1, void* parametro2)
@@ -616,16 +627,19 @@ int Passenger_sortprecio(void* parametro1, void* parametro2)
         {
         	retorno = 1;
         }
-
+        else if(precio1 == precio2)
+        {
+        	retorno = 0;
+        }
     }
     return retorno;
 }
 
-/** \brief compara el tipo de pasajero de dos pasajeros y si el primero es mayor que el segundo retorna 1
+/** \brief compara el tipo de pasajero de dos pasajeros
  *
  * \param parametro1 void* primer puntero pasajero
  * \param parametro2 void* segundo puntero pasajero
- * \return int retorna 1 si el tipo de pasajero del primero es mayor que del segundo o -1 sino
+ * \return int retorna 1 si el tipo de pasajero del primero es mayor que del segundo, 0 si son iguales y -1 si no se cumple ninguna de las 2
  *
  */
 int Passenger_sortTipoPasajero(void* parametro1, void* parametro2)
@@ -642,16 +656,19 @@ int Passenger_sortTipoPasajero(void* parametro1, void* parametro2)
         {
         	retorno = 1;
         }
-
+        else if(auxTipoPasajero1 == auxTipoPasajero2)
+        {
+        	retorno = 0;
+        }
     }
     return retorno;
 }
 
-/** \brief compara el codigo de vuelo de dos pasajeros y si el primero es mayor que el segundo retorna 1
+/** \brief compara el codigo de vuelo de dos pasajeros
  *
  * \param parametro1 void* primer puntero pasajero
  * \param parametro2 void* segundo puntero pasajero
- * \return int retorna 1 si el codigo de vuelo del primero es mayor que del segundo o -1 sino
+ * \return int retorna 1 si el codigo de vuelo del primero es mayor que del segundo, 0 si son iguales y -1 si no se cumple ninguna de las 2
  *
  */
 int Passenger_sortCodigoVuelo(void* parametro1, void* parametro2)
@@ -669,15 +686,19 @@ int Passenger_sortCodigoVuelo(void* parametro1, void* parametro2)
 		{
 			retorno = 1;
 		}
+        else if(strcmp(auxCodigoVuelo1,auxCodigoVuelo2) == 0)
+        {
+        	retorno = 0;
+        }
     }
     return retorno;
 }
 
-/** \brief compara el estado de vuelo de dos pasajeros y si el primero es mayor que el segundo retorna 1
+/** \brief compara el estado de vuelo de dos pasajeros
  *
  * \param parametro1 void* primer puntero pasajero
  * \param parametro2 void* segundo puntero pasajero
- * \return int retorna 1 si el estado de vuelo del primero es mayor que del segundo o -1 sino
+ * \return int retorna 1 si el estado de vuelo del primero es mayor que del segundo, 0 si son iguales y -1 si no se cumple ninguna de las 2
  *
  */
 int Passenger_sortEstadoVuelo(void* parametro1, void* parametro2)
@@ -690,9 +711,14 @@ int Passenger_sortEstadoVuelo(void* parametro1, void* parametro2)
     {
     	Passenger_getEstadoVuelo(parametro1, &auxEstadoVuelo1);
     	Passenger_getEstadoVuelo(parametro2, &auxEstadoVuelo2);
+
         if(auxEstadoVuelo1 > auxEstadoVuelo2)
         {
         	retorno = 1;
+        }
+        else if(auxEstadoVuelo1 == auxEstadoVuelo2)
+        {
+        	retorno = 0;
         }
 
     }
