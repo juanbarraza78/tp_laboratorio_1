@@ -100,6 +100,10 @@ int esNumerica(char* cadena, int limite)
 	int retorno = 1;
 	if(cadena != NULL)
 	{
+		if(cadena[0] == ' ' || cadena[0] == '\0' )
+		{
+			retorno = 0;
+		}
 		for(int i = 0; i<limite && cadena[i] != '\0'; i++ )
 		{
 			if(cadena[0] == '-' || cadena[0] == '+')
@@ -178,31 +182,37 @@ int getFloat(float* pResultado)
 int esNumeroFlotante(char* cadena, int limite)
 {
 	int retorno = 1;
-	int contadorComa = 0;
+	int contadorPunto = 0;
+	int i = 0;
 	if(cadena != NULL)
 	{
-		for(int i = 0; i<limite && cadena[i] != '\0'; i++ )
+		if(cadena[0] == ' ' || cadena[0] == '\0' )
+		{
+			retorno = 0;
+		}
+		else
 		{
 			if(cadena[0] == '-' || cadena[0] == '+')
 			{
-				continue;
+				i = 1;
 			}
-			if(cadena[i] == '.')
+			for(; i<limite && cadena[i] != '\0'; i++)
 			{
-				contadorComa++;
-				if(contadorComa >= 2)
+				if(cadena[i] < '0' || cadena[i] > '9')
 				{
-					retorno = 0;
-					break;
+					if(cadena[i] == '.' && contadorPunto == 0)
+					{
+						contadorPunto++;
+					}
+					else
+					{
+						retorno = 0;
+						break;
+					}
 				}
-				continue;
-			}
-			if(cadena[i] < '0' || cadena[i] > '9')
-			{
-				retorno = 0;
-				break;
 			}
 		}
+
 	}
 	return retorno;
 }
@@ -273,6 +283,10 @@ int esMail(char* cadena, int limite)
 	int contadorArobas = 0;
 	if(cadena != NULL && limite > 0)
 	{
+		if(cadena[0] == '\0' )
+		{
+			retorno = 0;
+		}
 		for(int i = 0; i<limite && cadena[i] != '\0'; i++ )
 		{
 			if(cadena[i] == '@')
@@ -364,11 +378,15 @@ int esNombre(char* cadena, int limite)
 	int retorno = 1;
 	if(cadena != NULL && limite > 0)
 	{
+		if(cadena[0] == ' ' || cadena[0] == '\0' )
+		{
+			retorno = 0;
+		}
 		for(int i = 0; i<limite && cadena[i] != '\0'; i++ )
 		{
 			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && cadena[i] != ' ' && cadena[i] != 'ñ' && cadena[i] != 'Ñ' &&
-					cadena[i] != 'á' && cadena[i] != 'é' && cadena[i] != 'í' && cadena[i] != 'ó' && cadena[i] != 'ú' &&
-					cadena[i] != 'Á' && cadena[i] != 'É' && cadena[i] != 'Í' && cadena[i] != 'Ó' && cadena[i] != 'Ú')
+				cadena[i] != 'á' && cadena[i] != 'é' && cadena[i] != 'í' && cadena[i] != 'ó' && cadena[i] != 'ú' &&
+			    cadena[i] != 'Á' && cadena[i] != 'É' && cadena[i] != 'Í' && cadena[i] != 'Ó' && cadena[i] != 'Ú')
 			{
 				retorno = 0;
 				break;
@@ -439,11 +457,15 @@ int getCodigo(char codigo[], int len)
 * \param limite int se ingresa la longitud de la cadena
 *\return int retorna un (1) si es verdadero (0) si es falso
 */
-int esCodigo(char* cadena, int limite) // alfa numerico y se le permite espacio
+int esCodigo(char* cadena, int limite)
 {
 	int retorno = 1;
 	if(cadena != NULL && limite > 0)
 	{
+		if(cadena[0] == ' ' || cadena[0] == '\0' )
+		{
+			retorno = 0;
+		}
 		for(int i = 0; i<limite && cadena[i] != '\0'; i++ )
 		{
 			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && (cadena[i] < '0' || cadena[i] > '9') && cadena[i] != ' ')

@@ -13,7 +13,6 @@ int main()
 	int flagCerrar = 0;
 	int flagCargar = 0;
 	int opciones;
-	int cantidadGuardada;
 	do
 	{
 		flagCerrar = 0;
@@ -111,10 +110,9 @@ int main()
 			case 8:
 				if(ll_isEmpty(listaPasajeros) == 0)
 				{
-					cantidadGuardada = controller_saveAsText("data.csv", listaPasajeros);
-					if(cantidadGuardada >= 0)
+					if(controller_saveAsText("data.csv", listaPasajeros) >= 0)
 					{
-						printf("se pudo guardar correctamente %d elementos\n", cantidadGuardada);
+						printf("se pudo guardar correctamente \n");
 						flagGuardar = 1;
 					}
 				}
@@ -126,10 +124,9 @@ int main()
 			case 9:
 				if(ll_isEmpty(listaPasajeros) == 0)
 				{
-					cantidadGuardada = controller_saveAsBinary("dataBinario.csv", listaPasajeros);
-					if(cantidadGuardada >= 0)
+					if(controller_saveAsBinary("dataBinario.csv", listaPasajeros) >= 0)
 					{
-						printf("se pudo guardar correctamente %d elementos\n", cantidadGuardada);
+						printf("se pudo guardar correctamente \n");
 						flagGuardar = 1;
 					}
 				}

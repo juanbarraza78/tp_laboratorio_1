@@ -127,7 +127,7 @@ int utn_getDatosPassager(int* id, char name[],int lenName, char lastName[],int l
 	   !utn_getNumeroFlotante(price, "Ingrese precio del vuelo:\n", "Error, precio no valido\n", 0, 1000000, 2) &&
 	   !utn_getNumero(typePassanger, "Ingrese tipo de pasajero:\nPrimera clase[1] - Clase ejecutiva[2] - Clase turista[3]\n", "Error, opcion no valida\n", 1, 3, 2) &&
 	   !utn_getCodigo(flyCode, lenFlyCode, "Ingrese codigo del vuelo:\n", "Error, codigo no valido\n", 2) &&
-	   !utn_getNumero(statusFlight, "Ingrese estado del vuelo: Aterrizado[1] - En Horario[2] - En Vuelo[3] - Demorado[4]\n", "Error, opcion no valida\n", 1, 2, 2))
+	   !utn_getNumero(statusFlight, "Ingrese estado del vuelo: Activo[1] - En Horario[2] - En Vuelo[3] - Demorado[4]\n", "Error, opcion no valida\n", 1, 2, 2))
 	{
 		retorno = 0;
 		(*id)++;
@@ -376,23 +376,21 @@ int sortPassengersByCode(Passenger* list, int len, int order)
 	int i;
 	int retorno = -1;
 	Passenger bufferPassenger;
-	int nuevoLimite;
 	if(list != NULL && len >= 0)
 	{
-		nuevoLimite = len - 1;
 		do{
+			len--;
 			flagSwap = 0;
-			for(i = 0; i < nuevoLimite; i++)
+			for(i = 0; i < len; i++)
 			{
-					retorno = 0;
-					if((strcmp(list[i].flycode,list[i+1].flycode) < 0 && order == 0) || (strcmp(list[i].flycode,list[i+1].flycode) > 0 && order == 1))
-					{
-						flagSwap = 1;
-						bufferPassenger = list[i];
-						list[i] = list[i+1];
-						list[i+1] = bufferPassenger;
-					}
-			nuevoLimite--;
+				retorno = 0;
+				if((strcmp(list[i].flycode,list[i+1].flycode) < 0 && order == 0) || (strcmp(list[i].flycode,list[i+1].flycode) > 0 && order == 1))
+				{
+					flagSwap = 1;
+					bufferPassenger = list[i];
+					list[i] = list[i+1];
+					list[i+1] = bufferPassenger;
+				}
 			}
 		}while(flagSwap);
 	}

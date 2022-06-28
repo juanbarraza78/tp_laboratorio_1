@@ -514,6 +514,34 @@ int Passenger_modificarPorIdArray(LinkedList* listaPasajeros, int id)
 	return retorno;
 }
 
+/**************************************************************************************/
+
+/** \brief compara el id de dos pasajeros y si el primero es mayor que el segundo retorna 1
+ *
+ * \param parametro1 void* primer pasajero
+ * \param parametro2 void* segundo pasajero
+ * \return int retorna 1 si el id del primero es mayor que del segundo o -1 sino
+ *
+ */
+int Passenger_sortId(void* parametro1, void* parametro2)
+{
+    int retorno = -1;
+    int auxId1;
+    int auxId2;
+
+    if(parametro1!=NULL && parametro2!=NULL)
+    {
+    	Passenger_getId(parametro1, &auxId1);
+    	Passenger_getId(parametro2, &auxId2);
+        if(auxId1 > auxId2)
+        {
+        	retorno = 1;
+        }
+
+    }
+    return retorno;
+}
+
 /** \brief compara el nombre de dos pasajeros y si el primero es mayor que el segundo retorna 1
  *
  * \param parametro1 void* primer pasajero
@@ -538,6 +566,32 @@ int Passenger_sortNombre(void* parametro1, void* parametro2)
 		}
     }
 
+    return retorno;
+}
+
+/** \brief compara el apellido de dos pasajeros y si el primero es mayor que el segundo retorna 1
+ *
+ * \param parametro1 void* primer pasajero
+ * \param parametro2 void* segundo pasajero
+ * \return int retorna 1 si el apellido del primero es mayor que del segundo o -1 sino
+ *
+ */
+int Passenger_sortApellido(void* parametro1, void* parametro2)
+{
+    int retorno = -1;
+    char auxApellido1[LEN_APELLIDO];
+    char auxApellido2[LEN_APELLIDO];
+
+    if(parametro1 != NULL && parametro2 != NULL)
+    {
+    	Passenger_getApellido(parametro1, auxApellido1);
+    	Passenger_getApellido(parametro2, auxApellido2);
+
+		if(stricmp(auxApellido1,auxApellido2)>0)
+		{
+			retorno = 1;
+		}
+    }
     return retorno;
 }
 
@@ -567,9 +621,89 @@ int Passenger_sortprecio(void* parametro1, void* parametro2)
     return retorno;
 }
 
+/** \brief compara el tipo de pasajero de dos pasajeros y si el primero es mayor que el segundo retorna 1
+ *
+ * \param parametro1 void* primer puntero pasajero
+ * \param parametro2 void* segundo puntero pasajero
+ * \return int retorna 1 si el tipo de pasajero del primero es mayor que del segundo o -1 sino
+ *
+ */
+int Passenger_sortTipoPasajero(void* parametro1, void* parametro2)
+{
+    int retorno = -1;
+    int auxTipoPasajero1;
+    int auxTipoPasajero2;
+
+    if(parametro1!=NULL && parametro2!=NULL)
+    {
+    	Passenger_getTipoPasajero(parametro1, &auxTipoPasajero1);
+    	Passenger_getTipoPasajero(parametro2, &auxTipoPasajero2);
+        if(auxTipoPasajero1 > auxTipoPasajero2)
+        {
+        	retorno = 1;
+        }
+
+    }
+    return retorno;
+}
+
+/** \brief compara el codigo de vuelo de dos pasajeros y si el primero es mayor que el segundo retorna 1
+ *
+ * \param parametro1 void* primer puntero pasajero
+ * \param parametro2 void* segundo puntero pasajero
+ * \return int retorna 1 si el codigo de vuelo del primero es mayor que del segundo o -1 sino
+ *
+ */
+int Passenger_sortCodigoVuelo(void* parametro1, void* parametro2)
+{
+    int retorno = -1;
+    char auxCodigoVuelo1 [LEN_CODIGO];
+    char auxCodigoVuelo2 [LEN_CODIGO];
+
+    if(parametro1 != NULL && parametro2 != NULL)
+    {
+    	Passenger_getCodigoVuelo(parametro1, auxCodigoVuelo1);
+    	Passenger_getCodigoVuelo(parametro2, auxCodigoVuelo2);
+
+		if(strcmp(auxCodigoVuelo1,auxCodigoVuelo2)>0)
+		{
+			retorno = 1;
+		}
+    }
+    return retorno;
+}
+
+/** \brief compara el estado de vuelo de dos pasajeros y si el primero es mayor que el segundo retorna 1
+ *
+ * \param parametro1 void* primer puntero pasajero
+ * \param parametro2 void* segundo puntero pasajero
+ * \return int retorna 1 si el estado de vuelo del primero es mayor que del segundo o -1 sino
+ *
+ */
+int Passenger_sortEstadoVuelo(void* parametro1, void* parametro2)
+{
+    int retorno = -1;
+    int auxEstadoVuelo1;
+    int auxEstadoVuelo2;
+
+    if(parametro1!=NULL && parametro2!=NULL)
+    {
+    	Passenger_getEstadoVuelo(parametro1, &auxEstadoVuelo1);
+    	Passenger_getEstadoVuelo(parametro2, &auxEstadoVuelo2);
+        if(auxEstadoVuelo1 > auxEstadoVuelo2)
+        {
+        	retorno = 1;
+        }
+
+    }
+    return retorno;
+}
+
+/**************************************************************************************/
+
 /** \brief convierte una cadena de texto vinculada al campo tipo de pasajero a un numero
  *
- * \param tipoPasajeroStr char* cadena de texto puede ser: "FirstClass","ExecutiveClass","ExecutiveClass"
+ * \param tipoPasajeroStr char* cadena de texto puede ser: "FirstClass","ExecutiveClass","EconomyClass"
  * \return int retorna 0 si funciono correctamente o -1 sino
  *
  */
@@ -588,7 +722,7 @@ int Passenger_convertirTipoPasajeroint(char* tipoPasajeroStr)
 			strcpy(tipoPasajeroStr,"2\0");
 			retorno = 0;
 		}
-		else if(strcmp(tipoPasajeroStr,"ExecutiveClass") == 0)
+		else if(strcmp(tipoPasajeroStr,"EconomyClass") == 0)
 		{
 			strcpy(tipoPasajeroStr,"3\0");
 			retorno = 0;

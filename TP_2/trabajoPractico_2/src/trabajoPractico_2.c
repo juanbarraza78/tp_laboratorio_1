@@ -125,16 +125,11 @@ int main(void) {
 				}
 				break;
 			case 5:
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Juan", "ZZZ", 100, "xxb5q", 1, 1);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Pedro", "ZZZ", 100, "zz71", 2, 1);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Ricardo", "ZZZ", 200, "1asd", 3, 1);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Tomas", "Rios", 200, "aaww2", 2, 2);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Marcelo", "Gonzales", 200, "bcddd1", 1, 2);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Nacho", "Fernandes", 300, "cbbb44", 3, 3);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Alejandro", "Dias", 300, "dbbb44", 3, 3);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Bastian", "Acosta", 300, "ebbb44", 3, 4);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Catriel", "Lomas", 300, "fbbb44", 2, 4);
-				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Zalgo", "Barraza", 300, "abbb44", 1, 4);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Mariela", "Gomez", 20000, "AA200", 1, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Juan Pablo", "Martinez", 30000, "LA201", 2, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Mauro", "Gomez", 18000, "AA200", 2, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Yolanda", "Alberdi", 32000, "LA200", 1, 1);
+				addPassengerForzado(passengersArray, PASSENGER_LEN,&idPassengers, "Fabio", "Benitez", 45000, "AA220", 2, 2);
 				break;
 			case 6:
 				printPassengers(passengersArray, PASSENGER_LEN);

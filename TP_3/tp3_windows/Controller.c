@@ -10,9 +10,9 @@
 
 /** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo texto).
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param path char* es el path del archivo
+ * \param pArrayListPassenger LinkedList* es la linkedlist
+ * \return int retorna 0 si funciono correctamente o -1 sino
  *
  */
 int controller_loadFromText(char* path , LinkedList* pArrayListPassenger)
@@ -42,9 +42,9 @@ int controller_loadFromText(char* path , LinkedList* pArrayListPassenger)
 
 /** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo binario).
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param path char* es el path del archivo
+ * \param pArrayListPassenger LinkedList* es la linkedlist
+ * \return int retorna 0 si funciono correctamente o -1 sino
  *
  */
 int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger)
@@ -74,9 +74,8 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger)
 
 /** \brief Alta de pasajero
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param pArrayListPassenger LinkedList* es la linkedlist de pasajeros
+ * \return int retorna 0 si funciono correctamente o -1 sino
  *
  */
 int controller_addPassenger(LinkedList* pArrayListPassenger)
@@ -112,9 +111,8 @@ int controller_addPassenger(LinkedList* pArrayListPassenger)
 
 /** \brief Modificar datos de pasajero
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param pArrayListPassenger LinkedList* es la linkedlist de pasajeros
+ * \return int retorna 0 si funciono correctamente o -1 sino
  *
  */
 int controller_editPassenger(LinkedList* pArrayListPassenger)
@@ -137,9 +135,8 @@ int controller_editPassenger(LinkedList* pArrayListPassenger)
 
 /** \brief Baja de pasajero
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param pArrayListPassenger LinkedList* es la linkedlist de pasajeros
+ * \return int retorna 0 si funciono correctamente o -1 sino
  *
  */
 int controller_removePassenger(LinkedList* pArrayListPassenger)
@@ -161,9 +158,8 @@ int controller_removePassenger(LinkedList* pArrayListPassenger)
 
 /** \brief Listar pasajeros
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param pArrayListPassenger LinkedList* es la linkedlist de pasajeros
+ * \return int retorna 0 si funciono correctamente o -1 sino
  *
  */
 int controller_ListPassenger(LinkedList* pArrayListPassenger)
@@ -178,20 +174,46 @@ int controller_ListPassenger(LinkedList* pArrayListPassenger)
 
 /** \brief Ordenar pasajeros
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param pArrayListPassenger LinkedList* es la linkedlist de pasajeros
+ * \return int retorna 0 si funciono correctamente o -1 sino
  *
  */
 int controller_sortPassenger(LinkedList* pArrayListPassenger)
 {
 	int retorno = -1;
+	int tipoClasificacion;
+	int Orden;
 	if(pArrayListPassenger != NULL)
 	{
-		if(!ll_sort(pArrayListPassenger, Passenger_sortNombre, 1))
+		if(!utn_getNumero(&tipoClasificacion, "Ingrese forma de ordenar:\n1)Dni\n2)Nombre\n3)Apellido\n4)Precio\n5)Tipo de pasajero\n6)Codigo de vuelo\n7)Estado del vuelo\n", "Error, opcion invalida", 1, 7, 2) &&
+		   !utn_getNumero(&Orden, "Indeque el orden:\n1)Desendente\n2)Asendente\n", "Error, opcion invalida", 1, 2, 2))
 		{
+			switch(tipoClasificacion)
+			{
+			case 1:
+				ll_sort(pArrayListPassenger, Passenger_sortId, Orden-1);
+				break;
+			case 2:
+				ll_sort(pArrayListPassenger, Passenger_sortNombre, Orden-1);
+				break;
+			case 3:
+				ll_sort(pArrayListPassenger, Passenger_sortApellido, Orden-1);
+				break;
+			case 4:
+				ll_sort(pArrayListPassenger, Passenger_sortprecio, Orden-1);
+				break;
+			case 5:
+				ll_sort(pArrayListPassenger, Passenger_sortTipoPasajero, Orden-1);
+				break;
+			case 6:
+				ll_sort(pArrayListPassenger, Passenger_sortCodigoVuelo, Orden-1);
+				break;
+			case 7:
+				ll_sort(pArrayListPassenger, Passenger_sortEstadoVuelo, Orden-1);
+				break;
+			}
 			retorno = 0;
-			printf("Se ordeno correctamenten");
+			printf("\nSe ordeno correctamente\n");
 		}
 	}
 	return retorno;
@@ -199,9 +221,9 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger)
 
 /** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo texto).
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param path char* es el path del archivo
+ * \param pArrayListPassenger LinkedList* es la linkedlist de pasajeros
+ * \return int retorna la cantidad de pasajeros guardados si funciono correctamente o -1 sino
  *
  */
 int controller_saveAsText(char* path , LinkedList* pArrayListPassenger)
@@ -256,9 +278,9 @@ int controller_saveAsText(char* path , LinkedList* pArrayListPassenger)
 
 /** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo binario).
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param path char* es el path del archivo
+ * \param pArrayListPassenger LinkedList* es la linkedlist de pasajeros
+ * \return int  retorna la cantidad de pasajeros guardados si funciono correctamente o -1 sino
  *
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListPassenger)

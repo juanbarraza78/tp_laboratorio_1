@@ -47,8 +47,19 @@ int Passenger_buscarPorIdArray(LinkedList* listaPasajeros, int id);
 int Passenger_agregarArray(LinkedList* listaPasajeros, int id, char* nombre, char* apellido, float precio, int tipoPasajero, char* codigoVuelo, int estadoVuelo);
 int Passenger_borrarPorIdArray(LinkedList* listaPasajeros, int id);
 int Passenger_modificarPorIdArray(LinkedList* listaPasajeros, int id);
+
+/**************************************************************************************/
+
+int Passenger_sortId(void* parametro1, void* parametro2);
 int Passenger_sortNombre(void* parametro1, void* parametro2);
+int Passenger_sortApellido(void* parametro1, void* parametro2);
 int Passenger_sortprecio(void* parametro1, void* parametro2);
+int Passenger_sortTipoPasajero(void* parametro1, void* parametro2);
+int Passenger_sortCodigoVuelo(void* parametro1, void* parametro2);
+int Passenger_sortEstadoVuelo(void* parametro1, void* parametro2);
+
+/**************************************************************************************/
+
 int Passenger_convertirTipoPasajeroint(char* tipoPasajeroStr);
 int Passenger_convertirEstadoVueloSint(char* estadoVueloStr);
 
