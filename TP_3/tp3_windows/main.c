@@ -9,10 +9,14 @@ int main()
 {
 	setbuf(stdout, NULL);
 	LinkedList* listaPasajeros = ll_newLinkedList();
+	int flagGuardar = 0;
+	int flagCerrar = 0;
+	int flagCargar = 0;
 	int opciones;
 	int cantidadGuardada;
 	do
 	{
+		flagCerrar = 0;
 		printf("\n ---Menu---\n");
 		printf("1) CARGAR DATOS(MODO TEXTO)\n");
 		printf("2) CARGAR DATOS(MODO BINARIO)\n");
@@ -29,15 +33,31 @@ int main()
 			switch(opciones)
 			{
 			case 1:
-				controller_loadFromText("data.csv", listaPasajeros);
+				if(flagCargar == 0)
+				{
+					controller_loadFromText("data.csv", listaPasajeros);
+					flagCargar = 1;
+				}
+				else
+				{
+					printf("Ya se cargo anteriormente\n");
+				}
 				break;
 			case 2:
-				controller_loadFromBinary("dataBinario.csv", listaPasajeros);
+				if(flagCargar == 0)
+				{
+					controller_loadFromBinary("dataBinario.csv", listaPasajeros);
+					flagCargar = 1;
+				}
+				else
+				{
+					printf("Ya se cargo anteriormente\n");
+				}
 				break;
 			case 3:
 				if(!controller_addPassenger(listaPasajeros))
 				{
-					printf("add ok\n");
+					printf("Pasagero agregado\n");
 				}
 				break;
 			case 4:
@@ -95,6 +115,7 @@ int main()
 					if(cantidadGuardada >= 0)
 					{
 						printf("se pudo guardar correctamente %d elementos\n", cantidadGuardada);
+						flagGuardar = 1;
 					}
 				}
 				else
@@ -109,6 +130,7 @@ int main()
 					if(cantidadGuardada >= 0)
 					{
 						printf("se pudo guardar correctamente %d elementos\n", cantidadGuardada);
+						flagGuardar = 1;
 					}
 				}
 				else
@@ -116,9 +138,12 @@ int main()
 					printf("No hay nada guardado\n");
 				}
 				break;
+			case 10:
+				flagCerrar = 1;
+				break;
 			}
 		}
-	}while(opciones != 10);
+	}while(!(flagCerrar == 1 && flagGuardar ==1));
 	return EXIT_SUCCESS;
 
 }

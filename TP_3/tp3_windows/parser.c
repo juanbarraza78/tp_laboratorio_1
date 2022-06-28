@@ -5,9 +5,9 @@
 
 /** \brief Parsea los datos los datos de los pasajeros desde el archivo data.csv (modo texto).
  *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
+ * \param path char* path del archivo
+ * \param pArrayListPassenger LinkedList* es la linked list
+ * \return int 0 si funciono correctamente o -1 sino
  *
  */
 int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)

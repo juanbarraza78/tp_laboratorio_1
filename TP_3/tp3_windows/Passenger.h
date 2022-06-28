@@ -20,19 +20,17 @@ typedef struct
 	char nombre[LEN_NOMBRE];
 	char apellido[LEN_APELLIDO];
 	float precio;
-	int tipoPasajero;
+	int tipoPasajero; //{"FirstClass","ExecutiveClass","EconomyClass"};
 	char codigoVuelo[LEN_CODIGO];
-	int estadoVuelo;
+	int estadoVuelo; //{"Aterrizado","En Horario","En Vuelo","Demorado"};
 }Passenger;
-
-//char listTypePassenger[3][20] = {"FirstClass","ExecutiveClass","EconomyClass"};
-//char listStatusFlight[2][20] = {"Aterrizado","En Horario","En Vuelo","Demorado"};
 
 Passenger* Passenger_new();
 Passenger* Passenger_newParametrosStr(char* idStr, char* nombre, char* apellido, char* precioStr, char* tipoPasajeroStr, char* codigoVuelo, char* estadoVueloStr);
 Passenger* Passenger_newParametros(int id, char* nombre, char* apellido, float precio, int tipoPasajero, char* codigoVuelo, int estadoVuelo);
 void Passenger_delete(Passenger* this);
 
+/**************************************************************************************/
 
 int  Passenger_loadId(char* path);
 int Passenger_saveId(char* path,int id);
