@@ -349,8 +349,8 @@ int sortPassengersByLastNameAndTypePassenger(Passenger* list, int len, int order
 				convertirTipoPasajeroStr(list[i].typePassenger, tipoPasajeroStr);
 				convertirTipoPasajeroStr(list[i+1].typePassenger, tipoPasajeroStr2);
 
-				if((order == 0 && ((strcmp(list[i].lastName,list[i+1].lastName) < 0) || (stricmp(list[i].lastName,list[i+1].lastName) == 0 && strcmp(tipoPasajeroStr,tipoPasajeroStr2) < 0))) ||
-				   (order == 1 && ((strcmp(list[i].lastName,list[i+1].lastName) > 0) || (stricmp(list[i].lastName,list[i+1].lastName) == 0 && strcmp(tipoPasajeroStr,tipoPasajeroStr2) > 0))))
+				if((order == 0 && ((stricmp(list[i].lastName,list[i+1].lastName) < 0) || (stricmp(list[i].lastName,list[i+1].lastName) == 0 && stricmp(tipoPasajeroStr,tipoPasajeroStr2) < 0))) ||
+				   (order == 1 && ((stricmp(list[i].lastName,list[i+1].lastName) > 0) || (stricmp(list[i].lastName,list[i+1].lastName) == 0 && stricmp(tipoPasajeroStr,tipoPasajeroStr2) > 0))))
 				{
 					estaOrdenado = 1;
 					bufferPassenger = list[i];

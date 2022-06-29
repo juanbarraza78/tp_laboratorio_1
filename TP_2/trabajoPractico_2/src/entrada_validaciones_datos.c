@@ -384,9 +384,9 @@ int esNombre(char* cadena, int limite)
 		}
 		for(int i = 0; i<limite && cadena[i] != '\0'; i++ )
 		{
-			if((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && cadena[i] != ' ' && cadena[i] != 'ñ' && cadena[i] != 'Ñ' &&
+			if(((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && cadena[i] != ' ' && cadena[i] != 'ñ' && cadena[i] != 'Ñ' &&
 				cadena[i] != 'á' && cadena[i] != 'é' && cadena[i] != 'í' && cadena[i] != 'ó' && cadena[i] != 'ú' &&
-			    cadena[i] != 'Á' && cadena[i] != 'É' && cadena[i] != 'Í' && cadena[i] != 'Ó' && cadena[i] != 'Ú')
+			    cadena[i] != 'Á' && cadena[i] != 'É' && cadena[i] != 'Í' && cadena[i] != 'Ó' && cadena[i] != 'Ú') || (cadena[i] == ' ' && cadena[i+1] == ' '))
 			{
 				retorno = 0;
 				break;
